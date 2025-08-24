@@ -2,15 +2,15 @@ package ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile;
 
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDCargarArchivo;
-import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReports;
+import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
 
 /**
  *
  * @author YmCris
  */
-public class JFAnalyzer extends javax.swing.JFrame {
+public class JFAnalizador extends javax.swing.JFrame {
     
-    public JFAnalyzer() {
+    public JFAnalizador() {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -247,7 +247,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarTextoActualActionPerformed
 
     private void btnGenerarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportesActionPerformed
-        new JDReports(this).setVisible(true);
+        new JDReportes(this).setVisible(true);
     }//GEN-LAST:event_btnGenerarReportesActionPerformed
 
     private void txtEscribirPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEscribirPalabraActionPerformed

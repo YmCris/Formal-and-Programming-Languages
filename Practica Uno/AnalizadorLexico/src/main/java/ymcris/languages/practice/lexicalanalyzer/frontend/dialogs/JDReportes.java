@@ -6,14 +6,14 @@ import java.awt.Frame;
  *
  * @author YmCris
  */
-public class JDReports extends javax.swing.JDialog {
+public class JDReportes extends javax.swing.JDialog {
 
     /**
      * Creates new form JDReportes
      *
      * @param parent
      */
-    public JDReports(Frame parent) {
+    public JDReportes(Frame parent) {
         super(parent, false);
         initComponents();
         this.setResizable(false);
