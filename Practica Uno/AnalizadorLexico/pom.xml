@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>ymcris.languages.practice.one.analizadorlexico.AnalizadorLexico</exec.mainClass>
+        <exec.mainClass>ymcris.languages.practice.lexicalanalyzer.AnalizadorLexico</exec.mainClass>
     </properties>
     <build>
         <plugins>
@@ -20,7 +20,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ymcris.languages.practice.one.analizadorlexico.AnalizadorLexico</mainClass>
+                            <mainClass>ymcris.languages.practice.lexicalanalyzer.AnalizadorLexico</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
