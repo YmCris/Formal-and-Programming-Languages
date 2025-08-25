@@ -1,5 +1,10 @@
 Practica Uno/AnalizadorLexico/target/
 **/target/
 *.class
+*.jar
+nbactions.xml
+*.iml
+*.idea/
+
 
 
