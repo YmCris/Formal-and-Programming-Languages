@@ -1,6 +1,8 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.dialogs;
 
 import java.awt.Frame;
+import javax.swing.JOptionPane;
+import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
 
 /**
  *
@@ -8,12 +10,20 @@ import java.awt.Frame;
  */
 public class JDEditarPalabra extends javax.swing.JDialog {
 
-    public JDEditarPalabra(Frame parent) {
+    private ArchivoJSON json;
+    private String palabra;
+    private String lista;
+
+    public JDEditarPalabra(Frame parent, String lista, String palabra, ArchivoJSON json) {
         super(parent, true);
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("EDITAR");
+        this.json = json;
+        this.lista = lista;
+        this.lblTexto.setText(palabra);
+        this.palabra = palabra;
     }
 
     @SuppressWarnings("unchecked")
@@ -26,7 +36,7 @@ public class JDEditarPalabra extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         btnEditarPalabra = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        txtEditarPalabraReservada = new javax.swing.JTextField();
+        txtNuevaPalabra = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,15 +76,15 @@ public class JDEditarPalabra extends javax.swing.JDialog {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Se convertirá en la palabra:");
 
-        txtEditarPalabraReservada.setBackground(new java.awt.Color(58, 58, 60));
-        txtEditarPalabraReservada.setForeground(new java.awt.Color(229, 229, 231));
-        txtEditarPalabraReservada.setBorder(null);
-        txtEditarPalabraReservada.setDisabledTextColor(new java.awt.Color(58, 58, 60));
-        txtEditarPalabraReservada.setSelectedTextColor(new java.awt.Color(51, 51, 51));
-        txtEditarPalabraReservada.setSelectionColor(new java.awt.Color(229, 229, 231));
-        txtEditarPalabraReservada.addActionListener(new java.awt.event.ActionListener() {
+        txtNuevaPalabra.setBackground(new java.awt.Color(58, 58, 60));
+        txtNuevaPalabra.setForeground(new java.awt.Color(229, 229, 231));
+        txtNuevaPalabra.setBorder(null);
+        txtNuevaPalabra.setDisabledTextColor(new java.awt.Color(58, 58, 60));
+        txtNuevaPalabra.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        txtNuevaPalabra.setSelectionColor(new java.awt.Color(229, 229, 231));
+        txtNuevaPalabra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEditarPalabraReservadaActionPerformed(evt);
+                txtNuevaPalabraActionPerformed(evt);
             }
         });
 
@@ -96,7 +106,7 @@ public class JDEditarPalabra extends javax.swing.JDialog {
                 .addContainerGap(91, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormulario1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txtEditarPalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNuevaPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlFormulario1Layout.createSequentialGroup()
                 .addGap(347, 347, 347)
@@ -117,7 +127,7 @@ public class JDEditarPalabra extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addGap(16, 16, 16)
-                .addComponent(txtEditarPalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNuevaPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -146,12 +156,18 @@ public class JDEditarPalabra extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPalabraActionPerformed
-        // TODO add your handling code here:
+        if (palabra != null || !palabra.isBlank() || !palabra.isEmpty()) {
+            if (txtNuevaPalabra.getText().isEmpty() || txtNuevaPalabra.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "El recuadro no puede estar vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            json.modificarPalabraJSON(lista, palabra, txtNuevaPalabra.getText());
+        }
     }//GEN-LAST:event_btnEditarPalabraActionPerformed
 
-    private void txtEditarPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEditarPalabraReservadaActionPerformed
+    private void txtNuevaPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaPalabraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEditarPalabraReservadaActionPerformed
+    }//GEN-LAST:event_txtNuevaPalabraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -161,6 +177,6 @@ public class JDEditarPalabra extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblTexto;
     private javax.swing.JPanel pnlFormulario1;
-    private javax.swing.JTextField txtEditarPalabraReservada;
+    private javax.swing.JTextField txtNuevaPalabra;
     // End of variables declaration//GEN-END:variables
 }

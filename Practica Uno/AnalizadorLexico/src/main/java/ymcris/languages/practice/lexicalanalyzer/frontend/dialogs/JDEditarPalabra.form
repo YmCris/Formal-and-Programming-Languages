@@ -71,7 +71,7 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="txtEditarPalabraReservada" min="-2" pref="646" max="-2" attributes="0"/>
+                  <Component id="txtNuevaPalabra" min="-2" pref="646" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
@@ -96,7 +96,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="txtEditarPalabraReservada" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="txtNuevaPalabra" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -189,7 +189,7 @@
             <Property name="text" type="java.lang.String" value="Se convertir&#xe1; en la palabra:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEditarPalabraReservada">
+        <Component class="javax.swing.JTextField" name="txtNuevaPalabra">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="3a" red="3a" type="rgb"/>
@@ -211,7 +211,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEditarPalabraReservadaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNuevaPalabraActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

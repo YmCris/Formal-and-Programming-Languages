@@ -1,5 +1,6 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile;
 
+import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDCargarArchivo;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReports;
@@ -9,14 +10,17 @@ import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReports;
  * @author YmCris
  */
 public class JFAnalyzer extends javax.swing.JFrame {
-    
-    public JFAnalyzer() {
+
+    private ArchivoJSON json;
+
+    public JFAnalyzer(ArchivoJSON json) {
         initComponents();
+        this.json = json;
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("MENÚ PRINCIPAL");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -256,7 +260,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
 
     private void btnGenerarReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportes1ActionPerformed
         this.dispose();
-        new JFMenuPrincipal().setVisible(true);
+        new JFMenuPrincipal(json).setVisible(true);
     }//GEN-LAST:event_btnGenerarReportes1ActionPerformed
 
 
