@@ -9,17 +9,11 @@ import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
  *
  * @author YmCris
  */
-<<<<<<< HEAD:Practica Uno/AnalizadorLexico/src/main/java/ymcris/languages/practice/lexicalanalyzer/frontend/uploadfile/JFAnalyzer.java
-public class JFAnalyzer extends javax.swing.JFrame {
+public class JFAnalizador extends javax.swing.JFrame {
 
     private ArchivoJSON json;
 
-    public JFAnalyzer(ArchivoJSON json) {
-=======
-public class JFAnalizador extends javax.swing.JFrame {
-    
-    public JFAnalizador() {
->>>>>>> origin/main:Practica Uno/AnalizadorLexico/src/main/java/ymcris/languages/practice/lexicalanalyzer/frontend/uploadfile/JFAnalizador.java
+    public JFAnalizador(ArchivoJSON json) {
         initComponents();
         this.json = json;
         this.setResizable(false);

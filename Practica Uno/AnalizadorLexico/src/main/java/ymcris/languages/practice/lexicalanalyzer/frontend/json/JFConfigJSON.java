@@ -1153,7 +1153,7 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearSignoDePuntuacionActionPerformed
 
     private void btnSignosDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignosDePuntuacionActionPerformed
-        opcionEliminar("signosDePuntuacion", txtSignoDeAgrupacionSeleccionado);
+        opcionEliminar("signosDePuntuacion", txtSignoDePuntuacionSeleccionado);
     }//GEN-LAST:event_btnSignosDePuntuacionActionPerformed
 
     private void btnEditarSignoDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarSignoDePuntuacionActionPerformed
