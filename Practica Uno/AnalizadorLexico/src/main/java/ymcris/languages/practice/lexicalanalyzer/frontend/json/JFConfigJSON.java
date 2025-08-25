@@ -1,5 +1,8 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.json;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDEditarPalabra;
 
@@ -9,14 +12,42 @@ import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDEditarPalabr
  */
 public class JFConfigJSON extends javax.swing.JFrame {
 
-    /**
-     * Creates new form JFConfigJSON
-     */
-    public JFConfigJSON() {
+    private ArchivoJSON json;
+
+    public JFConfigJSON(ArchivoJSON json) {
         initComponents();
+        this.json = json;
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("CONFIGURACIÓN DEL ANALIZADOR LÉXICO");
+    }
+
+    public static void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void opcionCrear(String nombreLista, JTextField txt) {
+        if (txt.getText().isBlank() || txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El recuadro no puede estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        json.agregarPalabraAJSON(nombreLista, txt.getText());
+    }
+
+    private void opcionEliminar(String nombreLista, JTextField txt) {
+        if (txt.getText().isBlank() || txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Primero debes seleccionar una palabra antes de eliminarla", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        json.eliminarPalabraEnJSON(nombreLista, txt.getText());
+    }
+
+    private void opcionModificar(String lista, String palabra) {
+        if (palabra.isBlank() || palabra.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Primero debes seleccionar una palabra antes de modificarla", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        new JDEditarPalabra(this, lista, palabra, json).setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -62,8 +93,8 @@ public class JFConfigJSON extends javax.swing.JFrame {
         txtCrearSignoDePuntuacion = new javax.swing.JTextField();
         btnCrearSignoDePuntuacion = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
-        btnEliminarPalabraReservada2 = new javax.swing.JButton();
-        btnEditarPalabraReservada2 = new javax.swing.JButton();
+        btnSignosDePuntuacion = new javax.swing.JButton();
+        btnEditarSignoDePuntuacion = new javax.swing.JButton();
         txtSignoDePuntuacionSeleccionado = new javax.swing.JTextField();
         btnRMPR2 = new javax.swing.JButton();
         pnlPalabrasReservadas3 = new javax.swing.JPanel();
@@ -76,8 +107,8 @@ public class JFConfigJSON extends javax.swing.JFrame {
         txtCrearSignoDeAgrupacion = new javax.swing.JTextField();
         btnCrearSignoDeAgrupacion = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
-        btnEliminarPalabraReservada3 = new javax.swing.JButton();
-        btnEditarPalabraReservada3 = new javax.swing.JButton();
+        btnEliminarSignoDeAgrupacion = new javax.swing.JButton();
+        btnEditarSignoDeAgrupacion = new javax.swing.JButton();
         txtSignoDeAgrupacionSeleccionado = new javax.swing.JTextField();
         btnRMPR3 = new javax.swing.JButton();
 
@@ -687,29 +718,29 @@ public class JFConfigJSON extends javax.swing.JFrame {
         jSeparator3.setBackground(new java.awt.Color(51, 51, 51));
         jSeparator3.setForeground(new java.awt.Color(102, 102, 102));
 
-        btnEliminarPalabraReservada2.setBackground(new java.awt.Color(102, 102, 102));
-        btnEliminarPalabraReservada2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEliminarPalabraReservada2.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarPalabraReservada2.setText("Eliminar signo de puntuación");
-        btnEliminarPalabraReservada2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEliminarPalabraReservada2.setOpaque(false);
-        btnEliminarPalabraReservada2.setBorderPainted(false);
-        btnEliminarPalabraReservada2.addActionListener(new java.awt.event.ActionListener() {
+        btnSignosDePuntuacion.setBackground(new java.awt.Color(102, 102, 102));
+        btnSignosDePuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSignosDePuntuacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnSignosDePuntuacion.setText("Eliminar signo de puntuación");
+        btnSignosDePuntuacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSignosDePuntuacion.setOpaque(false);
+        btnSignosDePuntuacion.setBorderPainted(false);
+        btnSignosDePuntuacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarPalabraReservada2ActionPerformed(evt);
+                btnSignosDePuntuacionActionPerformed(evt);
             }
         });
 
-        btnEditarPalabraReservada2.setBackground(new java.awt.Color(102, 102, 102));
-        btnEditarPalabraReservada2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEditarPalabraReservada2.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarPalabraReservada2.setText("Editar signo de puntuación");
-        btnEditarPalabraReservada2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEditarPalabraReservada2.setOpaque(false);
-        btnEditarPalabraReservada2.setBorderPainted(false);
-        btnEditarPalabraReservada2.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarSignoDePuntuacion.setBackground(new java.awt.Color(102, 102, 102));
+        btnEditarSignoDePuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEditarSignoDePuntuacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarSignoDePuntuacion.setText("Editar signo de puntuación");
+        btnEditarSignoDePuntuacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEditarSignoDePuntuacion.setOpaque(false);
+        btnEditarSignoDePuntuacion.setBorderPainted(false);
+        btnEditarSignoDePuntuacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPalabraReservada2ActionPerformed(evt);
+                btnEditarSignoDePuntuacionActionPerformed(evt);
             }
         });
 
@@ -761,8 +792,8 @@ public class JFConfigJSON extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlPalabrasReservadas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarPalabraReservada2)
-                            .addComponent(btnEditarPalabraReservada2)
+                            .addComponent(btnSignosDePuntuacion)
+                            .addComponent(btnEditarSignoDePuntuacion)
                             .addComponent(txtSignoDePuntuacionSeleccionado)
                             .addComponent(btnRMPR2))))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -792,9 +823,9 @@ public class JFConfigJSON extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSignoDePuntuacionSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
-                        .addComponent(btnEliminarPalabraReservada2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSignosDePuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarPalabraReservada2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditarSignoDePuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnRMPR2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -926,29 +957,29 @@ public class JFConfigJSON extends javax.swing.JFrame {
         jSeparator4.setBackground(new java.awt.Color(51, 51, 51));
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
 
-        btnEliminarPalabraReservada3.setBackground(new java.awt.Color(102, 102, 102));
-        btnEliminarPalabraReservada3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEliminarPalabraReservada3.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarPalabraReservada3.setText("Eliminar signo de agrupación");
-        btnEliminarPalabraReservada3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEliminarPalabraReservada3.setOpaque(false);
-        btnEliminarPalabraReservada3.setBorderPainted(false);
-        btnEliminarPalabraReservada3.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarSignoDeAgrupacion.setBackground(new java.awt.Color(102, 102, 102));
+        btnEliminarSignoDeAgrupacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEliminarSignoDeAgrupacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarSignoDeAgrupacion.setText("Eliminar signo de agrupación");
+        btnEliminarSignoDeAgrupacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEliminarSignoDeAgrupacion.setOpaque(false);
+        btnEliminarSignoDeAgrupacion.setBorderPainted(false);
+        btnEliminarSignoDeAgrupacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarPalabraReservada3ActionPerformed(evt);
+                btnEliminarSignoDeAgrupacionActionPerformed(evt);
             }
         });
 
-        btnEditarPalabraReservada3.setBackground(new java.awt.Color(102, 102, 102));
-        btnEditarPalabraReservada3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEditarPalabraReservada3.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarPalabraReservada3.setText("Editar signo de agrupación");
-        btnEditarPalabraReservada3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEditarPalabraReservada3.setOpaque(false);
-        btnEditarPalabraReservada3.setBorderPainted(false);
-        btnEditarPalabraReservada3.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarSignoDeAgrupacion.setBackground(new java.awt.Color(102, 102, 102));
+        btnEditarSignoDeAgrupacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEditarSignoDeAgrupacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarSignoDeAgrupacion.setText("Editar signo de agrupación");
+        btnEditarSignoDeAgrupacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEditarSignoDeAgrupacion.setOpaque(false);
+        btnEditarSignoDeAgrupacion.setBorderPainted(false);
+        btnEditarSignoDeAgrupacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPalabraReservada3ActionPerformed(evt);
+                btnEditarSignoDeAgrupacionActionPerformed(evt);
             }
         });
 
@@ -1000,8 +1031,8 @@ public class JFConfigJSON extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlPalabrasReservadas3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminarPalabraReservada3)
-                            .addComponent(btnEditarPalabraReservada3)
+                            .addComponent(btnEliminarSignoDeAgrupacion)
+                            .addComponent(btnEditarSignoDeAgrupacion)
                             .addComponent(txtSignoDeAgrupacionSeleccionado)
                             .addComponent(btnRMPR3))))
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -1031,9 +1062,9 @@ public class JFConfigJSON extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSignoDeAgrupacionSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
-                        .addComponent(btnEliminarPalabraReservada3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminarSignoDeAgrupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarPalabraReservada3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditarSignoDeAgrupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnRMPR3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1067,7 +1098,7 @@ public class JFConfigJSON extends javax.swing.JFrame {
 
     private void btnRMPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRMPRActionPerformed
         this.dispose();
-        new JFMenuPrincipal().setVisible(true);
+        new JFMenuPrincipal(json).setVisible(true);
     }//GEN-LAST:event_btnRMPRActionPerformed
 
     private void txtPalabraReservadaSeleccionadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPalabraReservadaSeleccionadaActionPerformed
@@ -1075,15 +1106,14 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPalabraReservadaSeleccionadaActionPerformed
 
     private void btnEditarPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPalabraReservadaActionPerformed
-        new JDEditarPalabra(this).setVisible(true);
-    }//GEN-LAST:event_btnEditarPalabraReservadaActionPerformed
+        opcionModificar("palabrasReservadas", txtPalabraReservadaSeleccionada.getText());    }//GEN-LAST:event_btnEditarPalabraReservadaActionPerformed
 
     private void btnEliminarPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPalabraReservadaActionPerformed
-        // TODO add your handling code here:
+        opcionEliminar("palabrasReservadas", txtPalabraReservadaSeleccionada);
     }//GEN-LAST:event_btnEliminarPalabraReservadaActionPerformed
 
     private void btnCrearPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPalabraReservadaActionPerformed
-        // TODO add your handling code here:
+        opcionCrear("palabrasReservadas", txtCrearPalabraReservada);
     }//GEN-LAST:event_btnCrearPalabraReservadaActionPerformed
 
     private void txtCrearPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCrearPalabraReservadaActionPerformed
@@ -1095,15 +1125,15 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCrearOperadorAritmeticoActionPerformed
 
     private void btnCrearOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearOperadorAritmeticoActionPerformed
-        // TODO add your handling code here:
+        opcionCrear("operadoresAritmeticos", txtCrearOperadorAritmetico);
     }//GEN-LAST:event_btnCrearOperadorAritmeticoActionPerformed
 
     private void btnEliminarOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarOperadorAritmeticoActionPerformed
-        // TODO add your handling code here:
+        opcionEliminar("operadoresAritmeticos", txtOperadorSeleccionado);
     }//GEN-LAST:event_btnEliminarOperadorAritmeticoActionPerformed
 
     private void btnEditarOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarOperadorAritmeticoActionPerformed
-        new JDEditarPalabra(this).setVisible(true);
+        opcionModificar("operadoresAritmeticos", txtOperadorSeleccionado.getText());
     }//GEN-LAST:event_btnEditarOperadorAritmeticoActionPerformed
 
     private void txtOperadorSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOperadorSeleccionadoActionPerformed
@@ -1119,16 +1149,16 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCrearSignoDePuntuacionActionPerformed
 
     private void btnCrearSignoDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearSignoDePuntuacionActionPerformed
-        // TODO add your handling code here:
+        opcionCrear("signosDePuntuacion", txtCrearSignoDePuntuacion);
     }//GEN-LAST:event_btnCrearSignoDePuntuacionActionPerformed
 
-    private void btnEliminarPalabraReservada2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPalabraReservada2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarPalabraReservada2ActionPerformed
+    private void btnSignosDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignosDePuntuacionActionPerformed
+        opcionEliminar("signosDePuntuacion", txtSignoDeAgrupacionSeleccionado);
+    }//GEN-LAST:event_btnSignosDePuntuacionActionPerformed
 
-    private void btnEditarPalabraReservada2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPalabraReservada2ActionPerformed
-        new JDEditarPalabra(this).setVisible(true);
-    }//GEN-LAST:event_btnEditarPalabraReservada2ActionPerformed
+    private void btnEditarSignoDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarSignoDePuntuacionActionPerformed
+        opcionModificar("signosDePuntuacion", txtSignoDePuntuacionSeleccionado.getText());
+    }//GEN-LAST:event_btnEditarSignoDePuntuacionActionPerformed
 
     private void txtSignoDePuntuacionSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSignoDePuntuacionSeleccionadoActionPerformed
         // TODO add your handling code here:
@@ -1143,16 +1173,16 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCrearSignoDeAgrupacionActionPerformed
 
     private void btnCrearSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearSignoDeAgrupacionActionPerformed
-        // TODO add your handling code here:
+        opcionCrear("signosDeAgrupacion", txtCrearSignoDeAgrupacion);
     }//GEN-LAST:event_btnCrearSignoDeAgrupacionActionPerformed
 
-    private void btnEliminarPalabraReservada3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPalabraReservada3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarPalabraReservada3ActionPerformed
+    private void btnEliminarSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarSignoDeAgrupacionActionPerformed
+        opcionEliminar("signosDeAgrupacion", txtSignoDeAgrupacionSeleccionado);
+    }//GEN-LAST:event_btnEliminarSignoDeAgrupacionActionPerformed
 
-    private void btnEditarPalabraReservada3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPalabraReservada3ActionPerformed
-        new JDEditarPalabra(this).setVisible(true);
-    }//GEN-LAST:event_btnEditarPalabraReservada3ActionPerformed
+    private void btnEditarSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarSignoDeAgrupacionActionPerformed
+        opcionModificar("signosDeAgrupacion", txtSignoDeAgrupacionSeleccionado.getText());
+    }//GEN-LAST:event_btnEditarSignoDeAgrupacionActionPerformed
 
     private void txtSignoDeAgrupacionSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSignoDeAgrupacionSeleccionadoActionPerformed
         // TODO add your handling code here:
@@ -1170,16 +1200,16 @@ public class JFConfigJSON extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearSignoDePuntuacion;
     private javax.swing.JButton btnEditarOperadorAritmetico;
     private javax.swing.JButton btnEditarPalabraReservada;
-    private javax.swing.JButton btnEditarPalabraReservada2;
-    private javax.swing.JButton btnEditarPalabraReservada3;
+    private javax.swing.JButton btnEditarSignoDeAgrupacion;
+    private javax.swing.JButton btnEditarSignoDePuntuacion;
     private javax.swing.JButton btnEliminarOperadorAritmetico;
     private javax.swing.JButton btnEliminarPalabraReservada;
-    private javax.swing.JButton btnEliminarPalabraReservada2;
-    private javax.swing.JButton btnEliminarPalabraReservada3;
+    private javax.swing.JButton btnEliminarSignoDeAgrupacion;
     private javax.swing.JButton btnRMPR;
     private javax.swing.JButton btnRMPR1;
     private javax.swing.JButton btnRMPR2;
     private javax.swing.JButton btnRMPR3;
+    private javax.swing.JButton btnSignosDePuntuacion;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

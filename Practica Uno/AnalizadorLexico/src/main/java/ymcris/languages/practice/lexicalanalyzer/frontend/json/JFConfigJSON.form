@@ -790,8 +790,8 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel15" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnEliminarPalabraReservada2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnEditarPalabraReservada2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSignosDePuntuacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEditarSignoDePuntuacion" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtSignoDePuntuacionSeleccionado" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnRMPR2" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -829,9 +829,9 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtSignoDePuntuacionSeleccionado" min="-2" pref="25" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="btnEliminarPalabraReservada2" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="btnSignosDePuntuacion" min="-2" pref="35" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditarPalabraReservada2" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="btnEditarSignoDePuntuacion" min="-2" pref="35" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnRMPR2" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
@@ -992,7 +992,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnEliminarPalabraReservada2">
+            <Component class="javax.swing.JButton" name="btnSignosDePuntuacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -1011,13 +1011,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarPalabraReservada2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSignosDePuntuacionActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarPalabraReservada2.setOpaque(false);&#xa;btnEliminarPalabraReservada2.setBorderPainted(false);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnSignosDePuntuacion.setOpaque(false);&#xa;btnSignosDePuntuacion.setBorderPainted(false);"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnEditarPalabraReservada2">
+            <Component class="javax.swing.JButton" name="btnEditarSignoDePuntuacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -1036,10 +1036,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarPalabraReservada2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarSignoDePuntuacionActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarPalabraReservada2.setOpaque(false);&#xa;btnEditarPalabraReservada2.setBorderPainted(false);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarSignoDePuntuacion.setOpaque(false);&#xa;btnEditarSignoDePuntuacion.setBorderPainted(false);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSignoDePuntuacionSeleccionado">
@@ -1132,8 +1132,8 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnEliminarPalabraReservada3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnEditarPalabraReservada3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEliminarSignoDeAgrupacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEditarSignoDeAgrupacion" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtSignoDeAgrupacionSeleccionado" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnRMPR3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -1171,9 +1171,9 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtSignoDeAgrupacionSeleccionado" min="-2" pref="25" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="btnEliminarPalabraReservada3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="btnEliminarSignoDeAgrupacion" min="-2" pref="35" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditarPalabraReservada3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="btnEditarSignoDeAgrupacion" min="-2" pref="35" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnRMPR3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
@@ -1334,7 +1334,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnEliminarPalabraReservada3">
+            <Component class="javax.swing.JButton" name="btnEliminarSignoDeAgrupacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -1353,13 +1353,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarPalabraReservada3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarSignoDeAgrupacionActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarPalabraReservada3.setOpaque(false);&#xa;btnEliminarPalabraReservada3.setBorderPainted(false);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarSignoDeAgrupacion.setOpaque(false);&#xa;btnEliminarSignoDeAgrupacion.setBorderPainted(false);"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="btnEditarPalabraReservada3">
+            <Component class="javax.swing.JButton" name="btnEditarSignoDeAgrupacion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -1378,10 +1378,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarPalabraReservada3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarSignoDeAgrupacionActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarPalabraReservada3.setOpaque(false);&#xa;btnEditarPalabraReservada3.setBorderPainted(false);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarSignoDeAgrupacion.setOpaque(false);&#xa;btnEditarSignoDeAgrupacion.setBorderPainted(false);"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSignoDeAgrupacionSeleccionado">

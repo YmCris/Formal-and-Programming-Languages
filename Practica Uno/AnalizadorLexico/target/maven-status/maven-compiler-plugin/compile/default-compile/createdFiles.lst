@@ -1,6 +1,7 @@
 ymcris\languages\practice\lexicalanalyzer\frontend\uploadfile\JFAnalizador$6.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$3.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON.class
+ymcris\languages\practice\lexicalanalyzer\tokens\Token.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$26.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$7.class
 ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReportes$10.class
@@ -31,6 +32,7 @@ ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$9.class
 ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReportes$3.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$13.class
 ymcris\languages\practice\lexicalanalyzer\AnalizadorLexico.class
+ymcris\languages\practice\lexicalanalyzer\backend\JSON\Comentario.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$28.class
 ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReportes$9.class
 ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDCargarArchivo$2.class
@@ -60,5 +62,12 @@ ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$1.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$15.class
 ymcris\languages\practice\lexicalanalyzer\frontend\JFMenuPrincipal$3.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$20.class
+<<<<<<< HEAD
+ymcris\languages\practice\lexicalanalyzer\backend\JSON\ArchivoJSON.class
+ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReports$4.class
+ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReports$11.class
+ymcris\languages\practice\lexicalanalyzer\frontend\dialogs\JDReports$7.class
+=======
+>>>>>>> origin/main
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$18.class
 ymcris\languages\practice\lexicalanalyzer\frontend\json\JFConfigJSON$23.class
