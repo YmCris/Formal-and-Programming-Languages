@@ -3,17 +3,23 @@ package ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile;
 import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDCargarArchivo;
-import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReports;
+import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
 
 /**
  *
  * @author YmCris
  */
+<<<<<<< HEAD:Practica Uno/AnalizadorLexico/src/main/java/ymcris/languages/practice/lexicalanalyzer/frontend/uploadfile/JFAnalyzer.java
 public class JFAnalyzer extends javax.swing.JFrame {
 
     private ArchivoJSON json;
 
     public JFAnalyzer(ArchivoJSON json) {
+=======
+public class JFAnalizador extends javax.swing.JFrame {
+    
+    public JFAnalizador() {
+>>>>>>> origin/main:Practica Uno/AnalizadorLexico/src/main/java/ymcris/languages/practice/lexicalanalyzer/frontend/uploadfile/JFAnalizador.java
         initComponents();
         this.json = json;
         this.setResizable(false);
@@ -251,7 +257,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarTextoActualActionPerformed
 
     private void btnGenerarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportesActionPerformed
-        new JDReports(this).setVisible(true);
+        new JDReportes(this).setVisible(true);
     }//GEN-LAST:event_btnGenerarReportesActionPerformed
 
     private void txtEscribirPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEscribirPalabraActionPerformed

@@ -1,9 +1,13 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend;
 
+<<<<<<< HEAD
 import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReports;
+=======
+import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
+>>>>>>> origin/main
 import ymcris.languages.practice.lexicalanalyzer.frontend.json.JFConfigJSON;
-import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalyzer;
+import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalizador;
 
 /**
  *
@@ -152,11 +156,15 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
     private void btnUtilizarAnalizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUtilizarAnalizadorActionPerformed
         this.dispose();
+<<<<<<< HEAD
         new JFAnalyzer(json).setVisible(true);
+=======
+        new JFAnalizador().setVisible(true);
+>>>>>>> origin/main
     }//GEN-LAST:event_btnUtilizarAnalizadorActionPerformed
 
     private void btnVisualizarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarReportesActionPerformed
-        new JDReports(this).setVisible(true);
+        new JDReportes(this).setVisible(true);
     }//GEN-LAST:event_btnVisualizarReportesActionPerformed
 
     private void btnConfigurarAnalizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigurarAnalizadorActionPerformed
