@@ -1,22 +1,24 @@
 package ymcris.languages.practice.lexicalanalyzer;
 
-import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 
 /**
+ * Clase AnalizadorLexico es la clase main encargada de inicar el programa,
+ * crear el JSON inicial e iniciar el menú
  *
  * @author YmCris
- * @since
  */
 public class AnalizadorLexico {
 
+    /**
+     * Método encargado de iniciar el programa
+     *
+     * @param args argumentos para iniciar una actividad inmediata
+     */
     public static void main(String[] args) {
         ArchivoJSON json = new ArchivoJSON();
         json.crearArchivoJSON();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JFMenuPrincipal(json).setVisible(true);
-            }
-        });
+        new JFMenuPrincipal(json).setVisible(true);
     }
 }

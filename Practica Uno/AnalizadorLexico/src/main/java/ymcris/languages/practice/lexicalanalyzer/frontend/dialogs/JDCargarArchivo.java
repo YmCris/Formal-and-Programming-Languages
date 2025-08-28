@@ -1,22 +1,32 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.dialogs;
 
 import javax.swing.JOptionPane;
+import ymcris.languages.practice.lexicalanalyzer.backend.file.Archivo;
+import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalizador;
 
 /**
+ * JavaDialog encargado de seleccionar el archivo de texto para el usuario.
  *
  * @author YmCris
  */
 public class JDCargarArchivo extends javax.swing.JDialog {
 
-    public JDCargarArchivo() {
+    private Archivo archivo;
+    private JFAnalizador jfAnalizador;
+
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    public JDCargarArchivo(JFAnalizador jfAnalizador) {
+        this.setModal(true);
+        this.jfAnalizador = jfAnalizador;
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.archivo = new Archivo();
         this.setModal(false);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("CARGAR ARCHIVO");
     }
 
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,11 +128,20 @@ public class JDCargarArchivo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtRutaArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaArchivoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtRutaArchivoActionPerformed
 
     private void btnSeleccionarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarArchivoActionPerformed
-        // TODO add your handling code here:
+        if (txtRutaArchivo.getText().isEmpty() || txtRutaArchivo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Debes elegir algún archivo de texto", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!archivo.existeArchivo(txtRutaArchivo.getText()) || archivo.estaVacio(txtRutaArchivo.getText())) {
+            JOptionPane.showMessageDialog(null, "El archivo de texto debe existir y no debe estar vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        jfAnalizador.setLineasDeTexto(archivo.obtenerContenidoDelArchivo(txtRutaArchivo.getText()));
+        jfAnalizador.actualizarTextoDeEntradaPorArchivo();
+        this.dispose();
     }//GEN-LAST:event_btnSeleccionarArchivoActionPerformed
 
     private void jfcArchivoDeTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfcArchivoDeTextoActionPerformed

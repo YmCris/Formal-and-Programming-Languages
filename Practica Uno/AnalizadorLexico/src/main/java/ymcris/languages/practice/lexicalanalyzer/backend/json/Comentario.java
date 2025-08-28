@@ -1,4 +1,4 @@
-package ymcris.languages.practice.lexicalanalyzer.backend.JSON;
+package ymcris.languages.practice.lexicalanalyzer.backend.json;
 
 /**
  * Clase Comentario es la clase encargada de contener un bloque de comentario
@@ -21,7 +21,6 @@ public class Comentario {
         this.bloqueFin = bloqueFin;
     }
 
-    // MÉTODOS CONCRETOS -------------------------------------------------------
     // GETTERS -----------------------------------------------------------------
     public String getLinea() {
         return linea;
