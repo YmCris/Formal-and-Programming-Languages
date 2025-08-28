@@ -32,6 +32,8 @@ public class JFAnalizador extends javax.swing.JFrame {
     private ArchivoJSON json;
     private ArrayList<Token[]> tokens;
     private ArrayList<String> lineasDeTexto;
+    private ArrayList<Token> errores;
+    private ArrayList<Token> tokensReportes;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     int cantidadErrores = 0;
@@ -49,6 +51,8 @@ public class JFAnalizador extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("MENÚ PRINCIPAL");
         this.lineasDeTexto = new ArrayList<>();
+        this.errores = new ArrayList<>();
+        this.tokensReportes = new ArrayList<>();
         agregarReconocimientoDeTeclasAlPane();
     }
 
@@ -111,37 +115,46 @@ public class JFAnalizador extends javax.swing.JFrame {
             case "azul" -> {// palabras reservadas
                 StyleConstants.setForeground(style, Color.BLUE);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "cafe" -> {// identificadores
                 StyleConstants.setForeground(style, Color.DARK_GRAY);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "verde" -> {// números
                 StyleConstants.setForeground(style, Color.GREEN);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "naranja" -> {// cadena
                 StyleConstants.setForeground(style, Color.ORANGE);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "negro" -> {// decimales
                 StyleConstants.setForeground(style, Color.BLACK);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "verdeOscuro" -> {// comentarios de línea o bloque
                 StyleConstants.setForeground(style, Color.CYAN);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "amarillo" -> { // operadores
                 StyleConstants.setForeground(style, Color.YELLOW);
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "morado" -> { // agrupación
                 StyleConstants.setForeground(style, new Color(128, 0, 128));
                 tokensValidos++;
+                tokensReportes.add(token);
             }
             case "rojo" -> { // errores
                 StyleConstants.setForeground(style, Color.RED);
+                errores.add(token);
                 cantidadErrores++;
             }
             default ->
@@ -500,9 +513,11 @@ public class JFAnalizador extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El texto de entrada debe ser analizado primero", "ERROR", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        JDReportes reportes = new JDReportes(this);
+        JDReportes reportes = new JDReportes(this, controller);
         reportes.setCantidadErrores(cantidadErrores);
         reportes.setTokensValidos(tokensValidos);
+        reportes.setErrores(errores);
+        reportes.setTokensReportes(tokensReportes);
         reportes.setVisible(true);
     }//GEN-LAST:event_btnGenerarReportesActionPerformed
 
@@ -567,6 +582,18 @@ public class JFAnalizador extends javax.swing.JFrame {
 
     public void setTokens(ArrayList<Token[]> tokens) {
         this.tokens = tokens;
+    }
+
+    public ArrayList<Token> getErrores() {
+        return errores;
+    }
+
+    public int getTokensValidos() {
+        return tokensValidos;
+    }
+
+    public ArrayList<Token> getTokensReportes() {
+        return tokensReportes;
     }
 
 }

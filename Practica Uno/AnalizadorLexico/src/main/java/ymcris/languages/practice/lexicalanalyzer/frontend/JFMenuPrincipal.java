@@ -2,7 +2,6 @@ package ymcris.languages.practice.lexicalanalyzer.frontend;
 
 import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.json.JFConfigJSON;
-import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
 import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalizador;
 
 /**
@@ -160,7 +159,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUtilizarAnalizadorActionPerformed
 
     private void btnVisualizarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarReportesActionPerformed
-        new JDReportes(this).setVisible(true);
+        //new JDReportes(this).setVisible(true);
     }//GEN-LAST:event_btnVisualizarReportesActionPerformed
 
     private void btnConfigurarAnalizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigurarAnalizadorActionPerformed
