@@ -3,8 +3,8 @@ package ymcris.languages.practice.lexicalanalyzer.controller.validation;
 import java.util.ArrayList;
 import ymcris.languages.practice.lexicalanalyzer.backend.tokens.Token;
 import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
-import ymcris.languages.practice.lexicalanalyzer.backend.manejodetokens.ClasificadorDeToken;
 import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalizador;
+import ymcris.languages.practice.lexicalanalyzer.backend.manejodetokens.ClasificadorDeToken;
 
 /**
  * Clase LexemaController es la clase encargada de ser el verificador de la

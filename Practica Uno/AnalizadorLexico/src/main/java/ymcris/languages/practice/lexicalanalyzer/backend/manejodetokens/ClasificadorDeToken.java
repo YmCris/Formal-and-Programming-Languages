@@ -33,8 +33,8 @@ public class ClasificadorDeToken {
      * @param palabra a la cual se va a analizar.
      * @return arreglo de filas donde se encuentre la palabra.
      */
-    private int[] obtenerFilaDeLaPalabra(Token palabra) {
-        return null;
+    private int obtenerFilaDeLaPalabra(Token palabra) {
+        return 0;
     }
 
     /**
@@ -43,8 +43,8 @@ public class ClasificadorDeToken {
      * @param palabra - palabra a de la cual se va a analizar.
      * @return arreglo de columnas donde se encuentra la palabra.
      */
-    private int[] obtenerColumnaDeLaPalabra(Token palabra) {
-        return null;
+    private int obtenerColumnaDeLaPalabra(Token palabra) {
+        return 0;
     }
 
     private void darPosicionALosTokens() {
@@ -335,7 +335,7 @@ public class ClasificadorDeToken {
                 token.setColor("verdeOscuro");
                 token.setEsComentario(true);
                 token.setEstaResaltado(true);
-                System.out.println("El token " + token.getLexema() + " es un comentario de linea? " + token.esComentario() + " tiene el color " + token.getColor()+" es del tipo "+token.getTipo());
+                System.out.println("El token " + token.getLexema() + " es un comentario de linea? " + token.esComentario() + " tiene el color " + token.getColor() + " es del tipo " + token.getTipo());
             }
             return true;
         }

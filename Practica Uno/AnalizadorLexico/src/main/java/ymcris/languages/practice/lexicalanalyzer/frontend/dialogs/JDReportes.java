@@ -1,6 +1,11 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.dialogs;
 
 import java.awt.Frame;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
+import ymcris.languages.practice.lexicalanalyzer.backend.tokens.Token;
+import ymcris.languages.practice.lexicalanalyzer.controller.validation.LexemaController;
 
 /**
  * JavaDialog encargado de mostrar los reportes y las opciones de generarlos y
@@ -10,16 +15,83 @@ import java.awt.Frame;
  */
 public class JDReportes extends javax.swing.JDialog {
 
-    int cantidadErrores;
-    int tokensValidos;
+    private int cantidadErrores;
+    private int tokensValidos;
+    private LexemaController controller;
+    private ArrayList<Token> errores;
+    private ArrayList<Token> tokensReportes;//tambien sirve para el general
+    private ArrayList<Token> tokensNoUsados;//tambien sirve para el general
+    private DefaultTableModel tablaReporteErrores;
+    private DefaultTableModel tablaReporteTokens;
+    private DefaultTableModel tablaReporteLexemas;
+    private DefaultTableModel tablaReporteGeneral;
 
     // MÉTODO COSNTRUCTOR ------------------------------------------------------
-    public JDReportes(Frame parent) {
+    public JDReportes(Frame parent, LexemaController controller) {
         super(parent, true);
+        this.controller = controller;
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.tokensNoUsados = new ArrayList<>();
         this.setTitle("MENÚ PRINCIPAL");
+    }
+
+    private void verificarTokensNoUtilizados() {
+        tokensNoUsados.clear();
+        for (String palabraReservada : controller.getPalabrasReservadas()) {
+            if (!contieneToken(tokensReportes, palabraReservada)) {
+                tokensNoUsados.add(new Token(palabraReservada));
+            }
+        }
+        for (char operadorAritmetico : controller.getOperadoresAritmeticos()) {
+            String operador = String.valueOf(operadorAritmetico);
+            if (!contieneToken(tokensReportes, operador)) {
+                tokensNoUsados.add(new Token(operador));
+            }
+        }
+        for (char signoPuntuacion : controller.getSignosDePuntuacion()) {
+            String simbolo = String.valueOf(signoPuntuacion);
+            if (!contieneToken(tokensReportes, simbolo)) {
+                tokensNoUsados.add(new Token(simbolo));
+            }
+        }
+        for (char signoAgrupacion : controller.getSignosDeAgrupacion()) {
+            String simbolo = String.valueOf(signoAgrupacion);
+            if (!contieneToken(tokensReportes, simbolo)) {
+                tokensNoUsados.add(new Token(simbolo));
+            }
+        }
+    }
+
+    private boolean contieneToken(ArrayList<Token> lista, String lexema) {
+        for (Token t : lista) {
+            if (t.getLexema().equals(lexema)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void agregarErrores() {
+        tablaReporteErrores = (DefaultTableModel) jtblReporteErrores.getModel();
+        for (Token error : errores) {
+            tablaReporteErrores.addRow(new Object[]{error.getLexema()});
+        }
+    }
+
+    private void agregarTokens() {
+        tablaReporteTokens = (DefaultTableModel) jtblReporteTokens.getModel();
+        for (Token tokenReporte : tokensReportes) {
+            tablaReporteTokens.addRow(new Object[]{tokenReporte.getTipo(), tokenReporte.getLexema()});
+        }
+    }
+
+    private void agregarTokensNoUtilizados() {
+        tablaReporteGeneral = (DefaultTableModel) jtblReporteGeneral.getModel();
+        for (Token token : tokensNoUsados) {
+            tablaReporteGeneral.addRow(new Object[]{token.getLexema()});
+        }
     }
 
     // CÓDIGO AUTOGENERADO -----------------------------------------------------
@@ -69,7 +141,7 @@ public class JDReportes extends javax.swing.JDialog {
         lblPorcentajeTokensValidos = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtblReporteErrores1 = new javax.swing.JTable();
+        jtblReporteGeneral = new javax.swing.JTable();
         btnGenerarReporteGeneral = new javax.swing.JButton();
         btnExportarReporteGeneral = new javax.swing.JButton();
 
@@ -268,7 +340,7 @@ public class JDReportes extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jtblReporteErrores.setGridColor(new java.awt.Color(204, 204, 204));
+        jtblReporteErrores.setGridColor(new java.awt.Color(221, 221, 221));
         jScrollPane1.setViewportView(jtblReporteErrores);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -406,7 +478,9 @@ public class JDReportes extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jtblReporteTokens.setGridColor(new java.awt.Color(204, 204, 204));
+        jtblReporteTokens.setGridColor(new java.awt.Color(221, 221, 221));
+        jtblReporteTokens.setSelectionBackground(new java.awt.Color(221, 221, 221));
+        jtblReporteTokens.setShowGrid(true);
         jScrollPane3.setViewportView(jtblReporteTokens);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -748,8 +822,8 @@ public class JDReportes extends javax.swing.JDialog {
         lblPorcentajeTokensValidos.setName(""); // NOI18N
         lblPorcentajeTokensValidos.setPreferredSize(new java.awt.Dimension(300, 300));
 
-        jtblReporteErrores1.setBackground(new java.awt.Color(58, 58, 60));
-        jtblReporteErrores1.setModel(new javax.swing.table.DefaultTableModel(
+        jtblReporteGeneral.setBackground(new java.awt.Color(58, 58, 60));
+        jtblReporteGeneral.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -815,8 +889,8 @@ public class JDReportes extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jtblReporteErrores1.setGridColor(new java.awt.Color(204, 204, 204));
-        jScrollPane2.setViewportView(jtblReporteErrores1);
+        jtblReporteGeneral.setGridColor(new java.awt.Color(204, 204, 204));
+        jScrollPane2.setViewportView(jtblReporteGeneral);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -973,8 +1047,10 @@ public class JDReportes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportarReporteGeneralActionPerformed
 
     private void btnGenerarReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteGeneralActionPerformed
+        verificarTokensNoUtilizados();
         lblCantidadErrores.setText(String.valueOf(cantidadErrores));
         lblPorcentajeTokensValidos.setText(String.valueOf(tokensValidos));
+        agregarTokensNoUtilizados();
     }//GEN-LAST:event_btnGenerarReporteGeneralActionPerformed
 
     private void btnExportarReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarReporteTokensActionPerformed
@@ -982,7 +1058,7 @@ public class JDReportes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportarReporteTokensActionPerformed
 
     private void btnGenerarReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteTokensActionPerformed
-        // TODO add your handling code here:
+        agregarTokens();
     }//GEN-LAST:event_btnGenerarReporteTokensActionPerformed
 
     private void btnExportarReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarReporteErroresActionPerformed
@@ -990,7 +1066,7 @@ public class JDReportes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportarReporteErroresActionPerformed
 
     private void btnGenerarReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteErroresActionPerformed
-
+        agregarErrores();
     }//GEN-LAST:event_btnGenerarReporteErroresActionPerformed
 
     private void btnExportarReportesVistosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarReportesVistosActionPerformed
@@ -1031,7 +1107,7 @@ public class JDReportes extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jtblRecuentoLexemas;
     private javax.swing.JTable jtblReporteErrores;
-    private javax.swing.JTable jtblReporteErrores1;
+    private javax.swing.JTable jtblReporteGeneral;
     private javax.swing.JTable jtblReporteTokens;
     private javax.swing.JLabel lblCantidadErrores;
     private javax.swing.JLabel lblPorcentajeTokensValidos;
@@ -1066,4 +1142,15 @@ public class JDReportes extends javax.swing.JDialog {
         this.tokensValidos = tokensValidos;
     }
 
+    public ArrayList<Token> getErrores() {
+        return errores;
+    }
+
+    public void setErrores(ArrayList<Token> errores) {
+        this.errores = errores;
+    }
+
+    public void setTokensReportes(ArrayList<Token> tokensReportes) {
+        this.tokensReportes = tokensReportes;
+    }
 }
