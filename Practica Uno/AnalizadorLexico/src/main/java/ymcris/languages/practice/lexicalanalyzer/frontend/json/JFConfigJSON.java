@@ -1,19 +1,22 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend.json;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
+import javax.swing.JOptionPane;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.JFMenuPrincipal;
 import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDEditarPalabra;
 
 /**
+ * JavaFrame encargado de configurar el archivo JSON al gusto del usuario
  *
  * @author YmCris
  */
 public class JFConfigJSON extends javax.swing.JFrame {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     private ArchivoJSON json;
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFConfigJSON(ArchivoJSON json) {
         initComponents();
         this.json = json;
@@ -22,18 +25,43 @@ public class JFConfigJSON extends javax.swing.JFrame {
         this.setTitle("CONFIGURACIÓN DEL ANALIZADOR LÉXICO");
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de mostrar un mensaje en el frontend (static porque
+     * clase token no puede tenerlo, dá error)
+     *
+     * @param mensaje Mensaje de lo ocurrido en el proceso.
+     */
     public static void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void opcionCrear(String nombreLista, JTextField txt) {
+    /**
+     * Método planilla encargado de obtener la información para crear una nueva
+     * palabra en una clave dentor del archivo JSON.
+     *
+     * @param nombreLista nombre de la clave
+     * @param txt txt que contiene el nombre de la nueva palabra.
+     */
+    private void opcionCrear(String nombreLista, boolean tamañoImporta, JTextField txt) {
         if (txt.getText().isBlank() || txt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El recuadro no puede estar vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (tamañoImporta && txt.getText().length() > 1) {
+            JOptionPane.showMessageDialog(null, "No puedes tener un simbolo de ese tamaño en este lenguaje", "ERROR", JOptionPane.WARNING_MESSAGE);
             return;
         }
         json.agregarPalabraAJSON(nombreLista, txt.getText());
     }
 
+    /**
+     * Método planilla encargado de obtener la información para eliminar una
+     * palabra dentro de una clave en el archivo JSON.
+     *
+     * @param nombreLista nombre de la clave
+     * @param txt txt que contiene el nombre de la palabra a eliminar
+     */
     private void opcionEliminar(String nombreLista, JTextField txt) {
         if (txt.getText().isBlank() || txt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Primero debes seleccionar una palabra antes de eliminarla", "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -42,6 +70,12 @@ public class JFConfigJSON extends javax.swing.JFrame {
         json.eliminarPalabraEnJSON(nombreLista, txt.getText());
     }
 
+    /**
+     * Método planilla encargado de modificar una palabra dentro del JSON.
+     *
+     * @param lista nombre de la clave.
+     * @param palabra palabra que será modificada
+     */
     private void opcionModificar(String lista, String palabra) {
         if (palabra.isBlank() || palabra.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Primero debes seleccionar una palabra antes de modificarla", "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -50,6 +84,7 @@ public class JFConfigJSON extends javax.swing.JFrame {
         new JDEditarPalabra(this, lista, palabra, json).setVisible(true);
     }
 
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1102,7 +1137,6 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRMPRActionPerformed
 
     private void txtPalabraReservadaSeleccionadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPalabraReservadaSeleccionadaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtPalabraReservadaSeleccionadaActionPerformed
 
     private void btnEditarPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPalabraReservadaActionPerformed
@@ -1113,19 +1147,17 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarPalabraReservadaActionPerformed
 
     private void btnCrearPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPalabraReservadaActionPerformed
-        opcionCrear("palabrasReservadas", txtCrearPalabraReservada);
+        opcionCrear("palabrasReservadas", false, txtCrearPalabraReservada);
     }//GEN-LAST:event_btnCrearPalabraReservadaActionPerformed
 
     private void txtCrearPalabraReservadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCrearPalabraReservadaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtCrearPalabraReservadaActionPerformed
 
     private void txtCrearOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCrearOperadorAritmeticoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtCrearOperadorAritmeticoActionPerformed
 
     private void btnCrearOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearOperadorAritmeticoActionPerformed
-        opcionCrear("operadoresAritmeticos", txtCrearOperadorAritmetico);
+        opcionCrear("operadoresAritmeticos", true, txtCrearOperadorAritmetico);
     }//GEN-LAST:event_btnCrearOperadorAritmeticoActionPerformed
 
     private void btnEliminarOperadorAritmeticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarOperadorAritmeticoActionPerformed
@@ -1137,19 +1169,16 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarOperadorAritmeticoActionPerformed
 
     private void txtOperadorSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOperadorSeleccionadoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtOperadorSeleccionadoActionPerformed
 
     private void btnRMPR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRMPR1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnRMPR1ActionPerformed
 
     private void txtCrearSignoDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCrearSignoDePuntuacionActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtCrearSignoDePuntuacionActionPerformed
 
     private void btnCrearSignoDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearSignoDePuntuacionActionPerformed
-        opcionCrear("signosDePuntuacion", txtCrearSignoDePuntuacion);
+        opcionCrear("signosDePuntuacion", true, txtCrearSignoDePuntuacion);
     }//GEN-LAST:event_btnCrearSignoDePuntuacionActionPerformed
 
     private void btnSignosDePuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignosDePuntuacionActionPerformed
@@ -1161,19 +1190,16 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarSignoDePuntuacionActionPerformed
 
     private void txtSignoDePuntuacionSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSignoDePuntuacionSeleccionadoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtSignoDePuntuacionSeleccionadoActionPerformed
 
     private void btnRMPR2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRMPR2ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnRMPR2ActionPerformed
 
     private void txtCrearSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCrearSignoDeAgrupacionActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtCrearSignoDeAgrupacionActionPerformed
 
     private void btnCrearSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearSignoDeAgrupacionActionPerformed
-        opcionCrear("signosDeAgrupacion", txtCrearSignoDeAgrupacion);
+        opcionCrear("signosDeAgrupacion", true, txtCrearSignoDeAgrupacion);
     }//GEN-LAST:event_btnCrearSignoDeAgrupacionActionPerformed
 
     private void btnEliminarSignoDeAgrupacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarSignoDeAgrupacionActionPerformed
@@ -1185,11 +1211,9 @@ public class JFConfigJSON extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarSignoDeAgrupacionActionPerformed
 
     private void txtSignoDeAgrupacionSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSignoDeAgrupacionSeleccionadoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtSignoDeAgrupacionSeleccionadoActionPerformed
 
     private void btnRMPR3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRMPR3ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnRMPR3ActionPerformed
 
 

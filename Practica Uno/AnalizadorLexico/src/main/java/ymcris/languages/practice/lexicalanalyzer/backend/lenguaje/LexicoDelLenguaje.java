@@ -1,20 +1,20 @@
-package ymcris.languages.practice.lexicalanalyzer.tokens;
+package ymcris.languages.practice.lexicalanalyzer.backend.lenguaje;
 
-import java.util.ArrayList;
 import java.util.List;
-import ymcris.languages.practice.lexicalanalyzer.backend.JSON.Comentario;
+import java.util.ArrayList;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.Comentario;
 import ymcris.languages.practice.lexicalanalyzer.frontend.json.JFConfigJSON;
 
 /**
- * Clase Token es la clase encargada de ser el concepto de token en el programa,
- * por ende tendrá todos los atributos para que hacer el archivo JSON y
- * modificarlo después.
+ * Clase LexicoDelLenguaje es la clase encargada de ser el concepto de token en
+ * el programa, por ende tendrá todos los atributos para que hacer el archivo
+ * JSON y modificarlo después.
  *
  * @author YmCris
  * @see Comentario
  * @since Aug 24, 2025
  */
-public class Token {
+public class LexicoDelLenguaje {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private List<String> palabrasReservadas;
@@ -24,7 +24,7 @@ public class Token {
     private Comentario comentarios;
 
     // MÉTODOS CONCRETOS -------------------------------------------------------    
-    public Token() {
+    public LexicoDelLenguaje() {
         this.palabrasReservadas = new ArrayList<>();
         this.operadoresAritmeticos = new ArrayList<>();
         this.signosDePuntuacion = new ArrayList<>();
@@ -49,6 +49,12 @@ public class Token {
     }
 
     // AGREGAR PALABRA ---------------------------------------------------------
+    /**
+     * Método encargado de agregar una palabra en una lista
+     *
+     * @param palabra palabra a agregar
+     * @param lista clave a la cual se agregará la palabra.
+     */
     private void agregarPalabra(String palabra, List<String> lista) {
         if (existePalabra(palabra, lista)) {
             JFConfigJSON.mostrarInformacion("La palabra " + palabra + " ya existe en la lista");
@@ -110,6 +116,12 @@ public class Token {
     }
 
     // ELIMINAR ----------------------------------------------------------------
+    /**
+     * Método encargado de eliminar una palabra de una lista
+     *
+     * @param palabraAEliminar - Palabra que se desea eliminar.
+     * @param lista - Clave de la cual se eliminará la palabra.
+     */
     private void eliminarPalabra(String palabraAEliminar, List<String> lista) {
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).equals(palabraAEliminar)) {

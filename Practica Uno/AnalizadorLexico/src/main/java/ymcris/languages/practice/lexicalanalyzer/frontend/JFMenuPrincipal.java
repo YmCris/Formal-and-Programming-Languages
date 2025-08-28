@@ -1,19 +1,21 @@
 package ymcris.languages.practice.lexicalanalyzer.frontend;
 
-import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
-import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
 import ymcris.languages.practice.lexicalanalyzer.frontend.json.JFConfigJSON;
+import ymcris.languages.practice.lexicalanalyzer.frontend.dialogs.JDReportes;
 import ymcris.languages.practice.lexicalanalyzer.frontend.uploadfile.JFAnalizador;
 
 /**
+ * JavaFrame encargado de dar inicio al menú
  *
  * @author YmCris
- * @since
  */
 public class JFMenuPrincipal extends javax.swing.JFrame {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     private ArchivoJSON json;
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFMenuPrincipal(ArchivoJSON json) {
         initComponents();
         this.json = json;
@@ -149,6 +151,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
 
     private void btnUtilizarAnalizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUtilizarAnalizadorActionPerformed
         this.dispose();

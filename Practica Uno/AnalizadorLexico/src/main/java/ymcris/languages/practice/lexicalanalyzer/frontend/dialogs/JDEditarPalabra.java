@@ -2,18 +2,21 @@ package ymcris.languages.practice.lexicalanalyzer.frontend.dialogs;
 
 import java.awt.Frame;
 import javax.swing.JOptionPane;
-import ymcris.languages.practice.lexicalanalyzer.backend.JSON.ArchivoJSON;
+import ymcris.languages.practice.lexicalanalyzer.backend.json.ArchivoJSON;
 
 /**
+ * JavaDialog encargado de editar una palabra del archivo JSON
  *
  * @author crist
  */
 public class JDEditarPalabra extends javax.swing.JDialog {
 
-    private ArchivoJSON json;
-    private String palabra;
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     private String lista;
+    private String palabra;
+    private ArchivoJSON json;
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JDEditarPalabra(Frame parent, String lista, String palabra, ArchivoJSON json) {
         super(parent, true);
         initComponents();
@@ -26,6 +29,7 @@ public class JDEditarPalabra extends javax.swing.JDialog {
         this.palabra = palabra;
     }
 
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,7 +170,6 @@ public class JDEditarPalabra extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarPalabraActionPerformed
 
     private void txtNuevaPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevaPalabraActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtNuevaPalabraActionPerformed
 
 

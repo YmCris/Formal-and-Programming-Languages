@@ -1,15 +1,17 @@
-package ymcris.languages.practice.lexicalanalyzer.backend.JSON;
+package ymcris.languages.practice.lexicalanalyzer.backend.json;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.FileReader;
-import ymcris.languages.practice.lexicalanalyzer.tokens.Token;
+import ymcris.languages.practice.lexicalanalyzer.backend.lenguaje.LexicoDelLenguaje;
 
 /**
- * Clase ArchivoJSON es la clase encargada de crear el archivo JSON
+ * Clase ArchivoJSON es la clase encargada de crear el archivo JSON y
+ * actualizarlo, además de llamar los métodos de la clase token para poder
+ * modificar el archivo.
  *
  * @author YmCris
  * @since Aug 24, 2025
@@ -17,24 +19,27 @@ import ymcris.languages.practice.lexicalanalyzer.tokens.Token;
 public class ArchivoJSON {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    Token token;
+    LexicoDelLenguaje token;
 
     public ArchivoJSON() {
         File file = new File("config.json");
         if (file.exists()) {
             try (FileReader reader = new FileReader(file)) {
                 Gson gson = new Gson();
-                this.token = gson.fromJson(reader, Token.class);
+                this.token = gson.fromJson(reader, LexicoDelLenguaje.class);
             } catch (Exception e) {
-                e.printStackTrace();
-                this.token = new Token();
+                this.token = new LexicoDelLenguaje();
             }
         } else {
-            this.token = new Token();
+            this.token = new LexicoDelLenguaje();
         }
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de crear el archivo JSON inicial, cuando se ejecute el
+     * programa.
+     */
     public void crearArchivoJSON() {
         File file = new File("config.json");
         if (!file.exists()) {
@@ -54,13 +59,14 @@ public class ArchivoJSON {
             token.getSignosDePuntuacion().add(",");
             token.getSignosDePuntuacion().add(";");
             token.getSignosDePuntuacion().add(":");
-            token.getSignosDePuntuacion().add("\"");
+            token.getSignosDePuntuacion().add("'");
             token.getSignosDeAgrupacion().add("(");
             token.getSignosDeAgrupacion().add(")");
             token.getSignosDeAgrupacion().add("[");
             token.getSignosDeAgrupacion().add("]");
             token.getSignosDeAgrupacion().add("{");
             token.getSignosDeAgrupacion().add("}");
+            token.getSignosDeAgrupacion().add("\"");
             token.setComentarios(new Comentario("//", "/*", "*/"));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String contenidoJSON = gson.toJson(token);
@@ -74,6 +80,13 @@ public class ArchivoJSON {
         }
     }
 
+    /**
+     * Método encargado de agregar una palabra al archivo JSON en sus distintas
+     * claves.
+     *
+     * @param lista clave a la cual le asignará un valor nuevo.
+     * @param palabra valor que será asignado a una clave ya existente.
+     */
     public void agregarPalabraAJSON(String lista, String palabra) {
         switch (lista) {
             case "palabrasReservadas" -> {
@@ -95,6 +108,13 @@ public class ArchivoJSON {
         actualizarJSON();
     }
 
+    /**
+     * Mëtodo encargado de modificar una palabra ya existente por otra nueva.
+     *
+     * @param lista clave a la cual se modificará una palabra
+     * @param palabra palabra existente en la clave
+     * @param nuevaPalabra palabra que remplazará la palbra ya existente.
+     */
     public void modificarPalabraJSON(String lista, String palabra, String nuevaPalabra) {
         switch (lista) {
             case "palabrasReservadas" -> {
@@ -116,6 +136,12 @@ public class ArchivoJSON {
         actualizarJSON();
     }
 
+    /**
+     * Método encargado de eliminar una palabra en el archivo JSON
+     *
+     * @param lista clave donde se eliminará una palabra.
+     * @param palabra palabra que será eliminada.
+     */
     public void eliminarPalabraEnJSON(String lista, String palabra) {
         switch (lista) {
             case "palabrasReservadas" -> {
@@ -137,6 +163,10 @@ public class ArchivoJSON {
         actualizarJSON();
     }
 
+    /**
+     * Método encargado de actualizar el archivo JSON cada vez que se le aplique
+     * un cambio desde la interfaz de usuario.
+     */
     private void actualizarJSON() {
         try (FileWriter writer = new FileWriter("config.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -146,6 +176,79 @@ public class ArchivoJSON {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Mëtodo encargado de recuperar la inforemación guardada en el JSON
+     *
+     * @param clave clave de la cual se va a recuperar todo
+     * @return arreglo con el contenido.
+     */
+    public String[] recuperarValoresDeClaveEnJSON(String clave) {
+        return switch (clave) {
+            case "palabrasReservadas" ->
+                token.getPalabrasReservadas().toArray(new String[0]);
+            case "operadoresAritmeticos" ->
+                token.getOperadoresAritmeticos().toArray(new String[0]);
+            case "signosDePuntuacion" ->
+                token.getSignosDePuntuacion().toArray(new String[0]);
+            case "signosDeAgrupacion" ->
+                token.getSignosDeAgrupacion().toArray(new String[0]);
+            case "comentarios" ->
+                new String[]{
+                    token.getComentarios().getLinea(),
+                    token.getComentarios().getBloqueInicio(),
+                    token.getComentarios().getBloqueFin()
+                };
+            default ->
+                null;
+        };
+    }
+
+    /**
+     * Mëtodo encargado de recuperar la inforemación guardada en el JSON
+     * unicamente utilizar para los operadores, puntuacion y agrupacion.
+     *
+     * @param clave clave de la cual se va a recuperar todo
+     * @return arreglo con el contenido.
+     */
+    public char[] recuperarValorDeClaveEnJSON(String clave) {
+        return switch (clave) {
+            case "palabrasReservadas" ->
+                convertirArregloStringAArregloChar(token.getPalabrasReservadas().toArray(new String[0]));
+            case "operadoresAritmeticos" ->
+                convertirArregloStringAArregloChar(token.getOperadoresAritmeticos().toArray(new String[0]));
+            case "signosDePuntuacion" ->
+                convertirArregloStringAArregloChar(token.getSignosDePuntuacion().toArray(new String[0]));
+            case "signosDeAgrupacion" ->
+                convertirArregloStringAArregloChar(token.getSignosDeAgrupacion().toArray(new String[0]));
+            case "comentarios" ->
+                convertirArregloStringAArregloChar(new String[]{
+                    token.getComentarios().getLinea(),
+                    token.getComentarios().getBloqueInicio(),
+                    token.getComentarios().getBloqueFin()
+                }
+                );
+            default ->
+                null;
+        };
+    }
+
+    /**
+     * Método encargado de convertir un arreglo de strings a un arreglo de char
+     * unicamente utilizar para los operadores, puntuacion y agrupacion.
+     *
+     * @param arregloString - arreglo a transformar
+     * @return arreglo de char
+     */
+    private char[] convertirArregloStringAArregloChar(String[] arregloString) {
+        char[] arregloChar = new char[arregloString.length];
+        for (int i = 0; i < arregloChar.length; i++) {
+            if (arregloString[i].length() == 1) {
+                arregloChar[i] = arregloString[i].charAt(0);
+            }
+        }
+        return arregloChar;
     }
 
 }

@@ -3,24 +3,26 @@ package ymcris.languages.practice.lexicalanalyzer.frontend.dialogs;
 import java.awt.Frame;
 
 /**
+ * JavaDialog encargado de mostrar los reportes y las opciones de generarlos y
+ * exportarlos
  *
  * @author YmCris
  */
 public class JDReportes extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JDReportes
-     *
-     * @param parent
-     */
+    int cantidadErrores;
+    int tokensValidos;
+
+    // MÉTODO COSNTRUCTOR ------------------------------------------------------
     public JDReportes(Frame parent) {
-        super(parent, false);
+        super(parent, true);
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("MENÚ PRINCIPAL");
     }
 
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -706,7 +708,7 @@ public class JDReportes extends javax.swing.JDialog {
         lblTitulo12.setFont(new java.awt.Font("Swis721 Cn BT", 1, 24)); // NOI18N
         lblTitulo12.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo12.setText("Porcentaje de Tokens Validos:");
+        lblTitulo12.setText("Tokens Validos:");
         lblTitulo12.setToolTipText("");
         lblTitulo12.setMaximumSize(new java.awt.Dimension(300, 300));
         lblTitulo12.setMinimumSize(new java.awt.Dimension(300, 300));
@@ -844,8 +846,8 @@ public class JDReportes extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(lblTitulo12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                                .addComponent(lblTitulo12, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblPorcentajeTokensValidos, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(lblTitulo11, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -971,7 +973,8 @@ public class JDReportes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportarReporteGeneralActionPerformed
 
     private void btnGenerarReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteGeneralActionPerformed
-        // TODO add your handling code here:
+        lblCantidadErrores.setText(String.valueOf(cantidadErrores));
+        lblPorcentajeTokensValidos.setText(String.valueOf(tokensValidos));
     }//GEN-LAST:event_btnGenerarReporteGeneralActionPerformed
 
     private void btnExportarReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarReporteTokensActionPerformed
@@ -1046,4 +1049,21 @@ public class JDReportes extends javax.swing.JDialog {
     private javax.swing.JPanel pnlFormulario5;
     private javax.swing.JPanel pnlFormulario9;
     // End of variables declaration//GEN-END:variables
+
+    public int getCantidadErrores() {
+        return cantidadErrores;
+    }
+
+    public int getTokensValidos() {
+        return tokensValidos;
+    }
+
+    public void setCantidadErrores(int cantidadErrores) {
+        this.cantidadErrores = cantidadErrores;
+    }
+
+    public void setTokensValidos(int tokensValidos) {
+        this.tokensValidos = tokensValidos;
+    }
+
 }
