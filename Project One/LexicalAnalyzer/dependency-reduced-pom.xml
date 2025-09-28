@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ymcris.languages</groupId>
+  <groupId>ymcris.lexicalanalyzer</groupId>
   <artifactId>LexicalAnalyzer</artifactId>
   <version>1.0-SNAPSHOT</version>
   <build>
@@ -18,7 +18,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>ymcris.languages.lexicalanalyzer.LexicalAnalyzer</mainClass>
+                  <mainClass>ymcris.lexicalanalyzer.LexicalAnalyzer</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -30,6 +30,6 @@
   <properties>
     <maven.compiler.release>24</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <exec.mainClass>ymcris.languages.lexicalanalyzer.LexicalAnalyzer</exec.mainClass>
+    <exec.mainClass>ymcris.lexicalanalyzer.LexicalAnalyzer</exec.mainClass>
   </properties>
 </project>
