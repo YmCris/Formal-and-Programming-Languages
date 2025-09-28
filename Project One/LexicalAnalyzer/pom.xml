@@ -15,7 +15,8 @@
     
     <!-- Dependencies of the project -->
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        
+    <!-- MySQL (It'snt needed, but i want to try something)-->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
