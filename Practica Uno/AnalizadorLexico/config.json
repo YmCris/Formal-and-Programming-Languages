@@ -1,0 +1,39 @@
+{
+  "palabrasReservadas": [
+    "SI",
+    "si",
+    "ENTONCES",
+    "entonces",
+    "PARA",
+    "para"
+  ],
+  "operadoresAritmeticos": [
+    "+",
+    "-",
+    "*",
+    "/",
+    "%",
+    "\u003d"
+  ],
+  "signosDePuntuacion": [
+    ".",
+    ",",
+    ";",
+    ":",
+    "\u0027"
+  ],
+  "signosDeAgrupacion": [
+    "(",
+    ")",
+    "[",
+    "]",
+    "{",
+    "}",
+    "\""
+  ],
+  "comentarios": {
+    "linea": "//",
+    "bloqueInicio": "/*",
+    "bloqueFin": "*/"
+  }
+}
