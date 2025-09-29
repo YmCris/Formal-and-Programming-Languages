@@ -1,7 +1,7 @@
 package ymcris.lexicalanalyzer;
 
 import java.lang.reflect.InvocationTargetException;
-import ymcris.lexicalanalyzer.frontend.JDUploadFile;
+import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
 
 /**
  * Clase main encargada de dar inicio al programa llamando al JFrame encargado
@@ -15,7 +15,7 @@ public class LexicalAnalyzer {
     public static void main(String[] args) {
         try {
             java.awt.EventQueue.invokeAndWait(() -> {
-                new JDUploadFile().setVisible(true);
+                new JFLexicalAnalyzer().setVisible(true);
             });
         } catch (InterruptedException | InvocationTargetException ex) {
             ex.printStackTrace();
