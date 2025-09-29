@@ -1,30 +1,29 @@
-package ymcris.lexicalanalyzer.frontend.uploadfile;
+package ymcris.lexicalanalyzer.frontend.file;
 
 import javax.swing.JOptionPane;
-import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
-import ymcris.lexicalanalyzer.controller.UploadFileController;
+import ymcris.lexicalanalyzer.controller.FileController;
 
 /**
  * The JDialog JDUploadFile is the JDialog responsible for displaying the file
  * chooser
  *
  * @author YmCris
- * @see UploadFileController
+ * @see FileController
  * @since Sep 27, 2025
  */
 public class JDUploadFile extends javax.swing.JDialog {
 
     // REFERENCE VARIABLES -----------------------------------------------------
-    private UploadFileController uploadController;
+    private FileController uploadController;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public JDUploadFile(java.awt.Frame parent) {
+    public JDUploadFile(java.awt.Frame parent, FileController uploadController) {
         initComponents();
         this.setModal(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("CARGAR ARCHIVO");
-        this.uploadController = new UploadFileController((JFLexicalAnalyzer) parent);
+        this.uploadController = uploadController;
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -119,7 +118,7 @@ public class JDUploadFile extends javax.swing.JDialog {
         pnlLayout.setVerticalGroup(
             pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLayout.createSequentialGroup()
-                .addComponent(jFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                .addComponent(jFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

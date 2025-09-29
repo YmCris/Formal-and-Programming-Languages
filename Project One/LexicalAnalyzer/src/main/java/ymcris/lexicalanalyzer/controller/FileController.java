@@ -5,21 +5,22 @@ import ymcris.lexicalanalyzer.backend.File;
 import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
 
 /**
- * The UploadFileController class is the class responsible for be the
- * controlller of upload file.
+ * The FileController class is the class responsible for be the controlller of
+ * upload file.
  *
  * @author YmCris
  * @since Sep 29, 2025
  */
-public class UploadFileController {
+public class FileController {
 
     // REFERENCE VARIABLES -----------------------------------------------------
-    private JFLexicalAnalyzer jFLexicalAnalyzer;
-    private ArrayList<String> textLines;
     private File file;
+    private String content;
+    private ArrayList<String> textLines;
+    private JFLexicalAnalyzer jFLexicalAnalyzer;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public UploadFileController(JFLexicalAnalyzer analyzer) {
+    public FileController(JFLexicalAnalyzer analyzer) {
         this.jFLexicalAnalyzer = analyzer;
         this.file = new File();
     }
@@ -39,9 +40,17 @@ public class UploadFileController {
         return file;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setTextLines(ArrayList<String> textLines) {
         this.textLines = textLines;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }
