@@ -1,37 +1,30 @@
-package ymcris.lexicalanalyzer.frontend;
+package ymcris.lexicalanalyzer.frontend.uploadfile;
 
 import javax.swing.JOptionPane;
-import ymcris.lexicalanalyzer.backend.File;
+import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
+import ymcris.lexicalanalyzer.controller.UploadFileController;
 
 /**
  * The JDialog JDUploadFile is the JDialog responsible for displaying the file
  * chooser
  *
  * @author YmCris
+ * @see UploadFileController
  * @since Sep 27, 2025
  */
 public class JDUploadFile extends javax.swing.JDialog {
 
     // REFERENCE VARIABLES -----------------------------------------------------
-    private File file;
+    private UploadFileController uploadController;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public JDUploadFile(java.awt.Frame parent) {
         initComponents();
-        this.file = new File();
         this.setModal(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("CARGAR ARCHIVO");
-    }
-
-    public JDUploadFile() {
-        initComponents();
-        this.file = new File();
-        this.setModal(true);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setTitle("CARGAR ARCHIVO");
+        this.uploadController = new UploadFileController((JFLexicalAnalyzer) parent);
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -62,10 +55,10 @@ public class JDUploadFile extends javax.swing.JDialog {
 
         txtFilePath.setBackground(new java.awt.Color(142, 142, 147));
         txtFilePath.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtFilePath.setForeground(new java.awt.Color(229, 229, 231));
+        txtFilePath.setForeground(new java.awt.Color(255, 255, 255));
         txtFilePath.setBorder(null);
-        txtFilePath.setCaretColor(new java.awt.Color(142, 142, 147));
-        txtFilePath.setDisabledTextColor(new java.awt.Color(142, 142, 147));
+        txtFilePath.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtFilePath.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtFilePath.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         txtFilePath.setSelectionColor(new java.awt.Color(255, 255, 255));
         txtFilePath.addActionListener(new java.awt.event.ActionListener() {
@@ -166,16 +159,16 @@ public class JDUploadFile extends javax.swing.JDialog {
             showMessage("Debes elegir algún archivo de texto");
             return;
         }
-        if (!file.fileExists(txtFilePath.getText())) {
+        if (!uploadController.getFile().fileExists(txtFilePath.getText())) {
             showMessage("El archivo de texto debe existir");
             return;
         }
-        if (file.isEmpty(txtFilePath.getText())) {
+        if (uploadController.getFile().isEmpty(txtFilePath.getText())) {
             showMessage("El archivo de texto no debe estar vacio");
             return;
         }
-        //jfAnalizador.setLineasDeTexto(archivo.obtenerContenidoDelArchivo(txtFilePath.getText()));
-        //jfAnalizador.actualizarTextoDeEntradaPorArchivo();
+        uploadController.setTextLines(uploadController.getFile().obtenerContenidoDelArchivo(txtFilePath.getText()));
+        uploadController.updateTextForFile();
         this.dispose();
     }//GEN-LAST:event_btnSelectActionPerformed
 
@@ -190,7 +183,6 @@ public class JDUploadFile extends javax.swing.JDialog {
             txtFilePath.setText(rutaCarpeta);
         }
     }//GEN-LAST:event_jFileChooserActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;

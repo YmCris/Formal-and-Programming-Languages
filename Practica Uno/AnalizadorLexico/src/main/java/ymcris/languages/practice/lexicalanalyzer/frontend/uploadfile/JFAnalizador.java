@@ -267,14 +267,13 @@ public class JFAnalizador extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(51, 51, 51));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
-        jtpInformacion.setEditable(false);
         jtpInformacion.setBackground(new java.awt.Color(58, 58, 60));
         jtpInformacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60)));
         jtpInformacion.setForeground(new java.awt.Color(229, 229, 231));
-        jtpInformacion.setCaretColor(new java.awt.Color(58, 58, 60));
-        jtpInformacion.setDisabledTextColor(new java.awt.Color(58, 58, 60));
-        jtpInformacion.setSelectedTextColor(new java.awt.Color(58, 58, 60));
-        jtpInformacion.setSelectionColor(new java.awt.Color(58, 58, 60));
+        jtpInformacion.setCaretColor(new java.awt.Color(229, 229, 231));
+        jtpInformacion.setDisabledTextColor(new java.awt.Color(229, 229, 231));
+        jtpInformacion.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jtpInformacion.setSelectionColor(new java.awt.Color(255, 255, 255));
         jScrollPane3.setViewportView(jtpInformacion);
 
         btnSeleccionarArchivo.setBackground(new java.awt.Color(58, 58, 60));
