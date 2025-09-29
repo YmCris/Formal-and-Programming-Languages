@@ -1,9 +1,12 @@
 package ymcris.lexicalanalyzer.frontend;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.text.Document;
-import ymcris.lexicalanalyzer.controller.UploadFileController;
-import ymcris.lexicalanalyzer.frontend.uploadfile.JDUploadFile;
+import ymcris.lexicalanalyzer.controller.AnalyzerController;
+import ymcris.lexicalanalyzer.controller.FileController;
+import ymcris.lexicalanalyzer.frontend.file.JDSaveFile;
+import ymcris.lexicalanalyzer.frontend.file.JDUploadFile;
 
 /**
  * The JFrame JFLexicalAnalyzer is the JFrame responsible for displaying the
@@ -16,7 +19,8 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
 
     // REFERENCE VARIABLES -----------------------------------------------------
     private Document document;
-    private UploadFileController uploadController;
+    private FileController fileController;
+    private AnalyzerController lexicalAnalyzerController;
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     // CONSTRUCTOR METHOD ------------------------------------------------------
@@ -25,7 +29,8 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
         this.setTitle("ANALYZER");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.uploadController = new UploadFileController(this);
+        this.fileController = new FileController(this);
+        this.lexicalAnalyzerController = new AnalyzerController(this);
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -45,6 +50,7 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
         btnGuardarTextoActual = new javax.swing.JButton();
         btnGenerarReportes = new javax.swing.JButton();
         btnGuardarTextoActual1 = new javax.swing.JButton();
+        btnGenerarReportes1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,6 +140,17 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
             }
         });
 
+        btnGenerarReportes1.setBackground(new java.awt.Color(58, 58, 60));
+        btnGenerarReportes1.setFont(new java.awt.Font("Swis721 BlkCn BT", 0, 18)); // NOI18N
+        btnGenerarReportes1.setForeground(new java.awt.Color(229, 229, 231));
+        btnGenerarReportes1.setText("Salir");
+        btnGenerarReportes1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnGenerarReportes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReportes1ActionPerformed(evt);
+            }
+        });
+
         jdpBackground.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnSeleccionarArchivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -143,6 +160,7 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
         jdpBackground.setLayer(btnGuardarTextoActual, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnGenerarReportes, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnGuardarTextoActual1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpBackground.setLayer(btnGenerarReportes1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdpBackgroundLayout = new javax.swing.GroupLayout(jdpBackground);
         jdpBackground.setLayout(jdpBackgroundLayout);
@@ -152,26 +170,29 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
             .addGroup(jdpBackgroundLayout.createSequentialGroup()
                 .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdpBackgroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator2))
+                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3))
+                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(btnBuscarPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtEscribirPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE))
-                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator2))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jdpBackgroundLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnSeleccionarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnGuardarTextoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(159, 159, 159)
                         .addComponent(btnGuardarTextoActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGenerarReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3)))
+                        .addComponent(btnGenerarReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGenerarReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jdpBackgroundLayout.setVerticalGroup(
@@ -182,7 +203,8 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
                     .addComponent(btnSeleccionarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardarTextoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGenerarReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarTextoActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardarTextoActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGenerarReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -211,7 +233,7 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarArchivoActionPerformed
-        new JDUploadFile(this).setVisible(true);
+        new JDUploadFile(this, fileController).setVisible(true);
     }//GEN-LAST:event_btnSeleccionarArchivoActionPerformed
 
     private void btnBuscarPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPalabraActionPerformed
@@ -221,6 +243,12 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEscribirPalabraActionPerformed
 
     private void btnGuardarTextoActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTextoActualActionPerformed
+        if (jtpText.getText().isEmpty() || jtpText.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Debes almacenar algo en el archivo antes de guardarlo", "PELIGRO", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        fileController.setContent(jtpText.getText());
+        new JDSaveFile(this, fileController).setVisible(true);
     }//GEN-LAST:event_btnGuardarTextoActualActionPerformed
 
     private void btnGenerarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportesActionPerformed
@@ -230,10 +258,15 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarTextoActual1ActionPerformed
 
+    private void btnGenerarReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportes1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnGenerarReportes1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPalabra;
     private javax.swing.JButton btnGenerarReportes;
+    private javax.swing.JButton btnGenerarReportes1;
     private javax.swing.JButton btnGuardarTextoActual;
     private javax.swing.JButton btnGuardarTextoActual1;
     private javax.swing.JButton btnSeleccionarArchivo;
