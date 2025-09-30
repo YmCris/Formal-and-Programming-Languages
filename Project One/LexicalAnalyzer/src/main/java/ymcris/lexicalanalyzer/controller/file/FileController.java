@@ -1,8 +1,8 @@
-package ymcris.lexicalanalyzer.controller;
+package ymcris.lexicalanalyzer.controller.file;
 
 import java.util.ArrayList;
-import ymcris.lexicalanalyzer.backend.File;
-import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
+import ymcris.lexicalanalyzer.backend.file.File;
+import ymcris.lexicalanalyzer.view.analyzer.JFLexicalAnalyzer;
 
 /**
  * The FileController class is the class responsible for be the controlller of

@@ -1,7 +1,7 @@
-package ymcris.lexicalanalyzer.frontend.file;
+package ymcris.lexicalanalyzer.view.file;
 
 import javax.swing.JOptionPane;
-import ymcris.lexicalanalyzer.controller.FileController;
+import ymcris.lexicalanalyzer.controller.file.FileController;
 
 /**
  * The JDialog JDUploadFile is the JDialog responsible for displaying the file

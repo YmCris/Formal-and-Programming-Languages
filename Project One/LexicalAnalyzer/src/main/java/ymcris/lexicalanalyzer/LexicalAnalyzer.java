@@ -1,7 +1,7 @@
 package ymcris.lexicalanalyzer;
 
 import java.lang.reflect.InvocationTargetException;
-import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
+import ymcris.lexicalanalyzer.view.analyzer.JFLexicalAnalyzer;
 
 /**
  * Clase main encargada de dar inicio al programa llamando al JFrame encargado

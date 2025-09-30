@@ -1,6 +1,6 @@
-package ymcris.lexicalanalyzer.controller;
+package ymcris.lexicalanalyzer.controller.analyzer;
 
-import ymcris.lexicalanalyzer.frontend.JFLexicalAnalyzer;
+import ymcris.lexicalanalyzer.view.analyzer.JFLexicalAnalyzer;
 
 /**
  * The AnalyzerController class is the class responsible for be the

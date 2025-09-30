@@ -1,12 +1,12 @@
-package ymcris.lexicalanalyzer.frontend;
+package ymcris.lexicalanalyzer.view.analyzer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.text.Document;
-import ymcris.lexicalanalyzer.controller.AnalyzerController;
-import ymcris.lexicalanalyzer.controller.FileController;
-import ymcris.lexicalanalyzer.frontend.file.JDSaveFile;
-import ymcris.lexicalanalyzer.frontend.file.JDUploadFile;
+import ymcris.lexicalanalyzer.controller.analyzer.AnalyzerController;
+import ymcris.lexicalanalyzer.controller.file.FileController;
+import ymcris.lexicalanalyzer.view.file.JDSaveFile;
+import ymcris.lexicalanalyzer.view.file.JDUploadFile;
 
 /**
  * The JFrame JFLexicalAnalyzer is the JFrame responsible for displaying the
