@@ -17,9 +17,8 @@ import ymcris.lexicalanalyzer.model.word.tokens.TokenType;
 public class Automata {
 
     // CONSTANTS ---------------------------------------------------------------
-    // COLUMNS
-    // 0: dígitos    1: letras    2: punto decimal     3: special character
-    // 4: punctuation marks      5: grouping marks         6: arithmetic operator
+    // ENTERIES (COLUMNS)
+    private static final int ERROR = -1;
     private static final int DIGIT = 0;
     private static final int LETTER = 1;
     private static final int DOT = 2;
@@ -30,128 +29,187 @@ public class Automata {
     private static final int PUNCTUATION_MARKS = 7;
     private static final int GROUPING_MARKS = 8;
     private static final int ARITHMETIC_OPERATOR = 9;
-    // STATES
+    // STATES (ROWS)
     private static final int STATE_ZERO = 0;
     private static final int STATE_ONE = 1;
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
     private static final int STATE_FOUR = 4;
+    private static final int STATE_FIVE = 5;
+    private static final int STATE_SIX = 6;
+    private static final int STATE_SEVEN = 7;
+    private static final int STATE_EIGHT = 8;
+    private static final int STATE_NINE = 9;
+    private static final int STATE_TEN = 10;
+    private static final int STATE_ELEVEN = 11;
+    private static final int STATE_STRING_END = 12;
+    private static final int STATE_COMMENT_ASTERISK = 13;
+    private static final int STATE_ERROR_ABSORB = 14;
 
     // REFERENCE VARIABLES -----------------------------------------------------
+    private Language language = new Language();
     private ArrayList<Token> tokens = new ArrayList<>();
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int currentStatus = 0;
     private int previusStatus = 0;
-
-    /**
-     * Matriz de transicion de 5 estados (filas) y 7 tipos de simbolos
-     * (columnas)
-     */
-    private int[][] transitions = new int[5][10];// x = states y = symbols
+    private boolean isChain = false;
+    private int[][] transitions = new int[15][10];
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public Automata() {
-        // Estado 0: inicio
-        transitions[STATE_ZERO][DIGIT] = 1; // dígito → estado 1 (inicio de número)
-        transitions[STATE_ZERO][LETTER] = 4; // letra → estado 4 (inicio de identificador)
-        transitions[STATE_ZERO][DOT] = -1; // punto → error
+        // state 0: start
+        transitions[STATE_ZERO][DIGIT] = STATE_ONE;
+        transitions[STATE_ZERO][LETTER] = STATE_FOUR;
+        transitions[STATE_ZERO][DOT] = ERROR;
+        transitions[STATE_ZERO][PUNCTUATION_MARKS] = STATE_FIVE;
+        transitions[STATE_ZERO][GROUPING_MARKS] = STATE_SIX;
+        transitions[STATE_ZERO][ARITHMETIC_OPERATOR] = STATE_SEVEN;
+        transitions[STATE_ZERO][QUOTE] = STATE_EIGHT;
+        transitions[STATE_ZERO][SLASH] = STATE_NINE;
 
-        // Estado 1: número entero
-        transitions[STATE_ONE][DIGIT] = 1; // dígito → sigue siendo entero
-        transitions[STATE_ONE][LETTER] = 1; // letra → sigue (error semántico, pero lo acepta)
-        transitions[STATE_ONE][DOT] = 2; // punto → posible decimal
+        // state 1: integer
+        transitions[STATE_ONE][DIGIT] = STATE_ONE;
+        transitions[STATE_ONE][DOT] = STATE_TWO;
+        transitions[STATE_ONE][LETTER] = ERROR;
 
-        // Estado 2: después del punto
-        transitions[STATE_TWO][DIGIT] = 3; // dígito → decimal válido
-        transitions[STATE_TWO][LETTER] = -1; // letra → error
-        transitions[STATE_TWO][DOT] = -1; // punto → error
+        // state 2: before dot
+        transitions[STATE_TWO][DIGIT] = STATE_THREE;
+        transitions[STATE_TWO][DOT] = ERROR;
+        transitions[STATE_TWO][LETTER] = ERROR;
 
-        // Estado 3: decimal
-        transitions[STATE_THREE][DIGIT] = 3; // dígito → sigue siendo decimal
-        transitions[STATE_THREE][LETTER] = -1; // letra → error
-        transitions[STATE_THREE][DOT] = -1; // punto → error
+        // state 3: decimal
+        transitions[STATE_THREE][DIGIT] = STATE_THREE;
+        transitions[STATE_THREE][DOT] = STATE_ERROR_ABSORB;
+        transitions[STATE_THREE][LETTER] = ERROR;
 
-        // Estado 4: identificador
-        transitions[STATE_FOUR][DIGIT] = 4; // dígito → sigue siendo identificador
-        transitions[STATE_FOUR][LETTER] = 4; // letra → sigue siendo identificador
-        transitions[STATE_FOUR][DOT] = -1; // punto → error
+        // state 4: identifier
+        transitions[STATE_FOUR][DIGIT] = STATE_FOUR;
+        transitions[STATE_FOUR][LETTER] = STATE_FOUR;
+        transitions[STATE_FOUR][DOT] = STATE_ERROR_ABSORB;
+
+        // state 5: punctuation
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_FIVE][c] = ERROR;
+        }
+
+        // state 6: grouping
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_SIX][c] = ERROR;
+        }
+
+        // state 7: operator
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_SEVEN][c] = ERROR;
+        }
+
+        // satate 8: string
+        transitions[STATE_EIGHT][QUOTE] = STATE_STRING_END;
+        transitions[STATE_EIGHT][DIGIT] = STATE_EIGHT;
+        transitions[STATE_EIGHT][LETTER] = STATE_EIGHT;
+        transitions[STATE_EIGHT][SPACE] = STATE_EIGHT;
+        transitions[STATE_EIGHT][SPECIAL_CHARACTER] = STATE_EIGHT;
+        transitions[STATE_EIGHT][DOT] = STATE_EIGHT;
+        transitions[STATE_EIGHT][PUNCTUATION_MARKS] = STATE_EIGHT;
+        transitions[STATE_EIGHT][GROUPING_MARKS] = STATE_EIGHT;
+        transitions[STATE_EIGHT][ARITHMETIC_OPERATOR] = STATE_EIGHT;
+
+        // state 9: line commentary
+        transitions[STATE_NINE][SLASH] = STATE_TEN;
+        transitions[STATE_NINE][ARITHMETIC_OPERATOR] = STATE_SEVEN;
+        transitions[STATE_NINE][SPECIAL_CHARACTER] = STATE_ELEVEN;
+
+        // state 10: line comenter
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_TEN][c] = STATE_TEN;
+        }
+
+        // state 11: block commenter
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_ELEVEN][c] = STATE_ELEVEN;
+        }
+        transitions[STATE_ELEVEN][ARITHMETIC_OPERATOR] = STATE_COMMENT_ASTERISK;
+
+        // state 13: end block commenter
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_COMMENT_ASTERISK][c] = STATE_ELEVEN;
+        }
+        transitions[STATE_COMMENT_ASTERISK][SLASH] = STATE_STRING_END;
+
+        for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
+            transitions[STATE_ERROR_ABSORB][c] = STATE_ERROR_ABSORB;
+        }
+
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
-    /**
-     * Este método recorre el texto carácter por carácter y simula el autómata.
-     *
-     * @param text
-     */
     public void analyze(String text) {
         String lexeme = "";
         int column = 0;
         for (int i = 0; i < text.length(); i++) {
-            //1. Clasifica el carácter como dígito, letra, punto o espacio.
             char character = text.charAt(i);
             int type = getCharacterType(character);
-            if (type != 3) {
-                lexeme = lexeme + character;
-            }
-            //2. Acumula el lexema mientras no sea espacio.
-            if (type == 3) {// are two words in one text
-                //2.1 Espacio: separamos tokens
-                restartAutomata(lexeme, i);
-                lexeme = "";
-            } else if (type == -1) {
-                //3 Carácter inválido
-                System.out.println("ERROR EL CARACTER NO ESTA EN EL ALFABETO");
-                currentStatus = -1;
-                restartAutomata(lexeme, i);
-                lexeme = "";
-            } else {
-                //4. Transición válida
-                previusStatus = currentStatus;
-                currentStatus = transitions[currentStatus][type];
-                if (currentStatus == -1) {
-                    //5. Transición inválida
-                    System.out.println("ERROR");
+            System.out.println("En el caracter " + character + " soy del tipo " + type);
+            if (type == SPACE) {
+                if (currentStatus == STATE_EIGHT || currentStatus == STATE_STRING_END) {
+                    lexeme = lexeme + character;
+                } else {
+                    System.out.println("ES UN ESPACIO HAY QUE REINICIAR EL AUTOMATA");
                     restartAutomata(lexeme, i);
                     lexeme = "";
+                }
+            } else if (type == ERROR) {
+                System.out.println("ERROR EL CARACTER NO ESTA EN EL ALFABETO");
+                currentStatus = ERROR;
+                restartAutomata(lexeme, i);
+                lexeme = "";
+                currentStatus = STATE_ZERO;
+            } else {
+                previusStatus = currentStatus;
+                if (currentStatus == ERROR) {
+                    restartAutomata(lexeme, i - 1);
+                    lexeme = "" + character;
+                    currentStatus = transitions[STATE_ZERO][type];
+                    continue;
+                }
+                int nextStatus = transitions[currentStatus][type];
+                if (nextStatus == ERROR) {
+                    System.out.println("ERROR");
+                    restartAutomata(lexeme, i - 1);
+                    lexeme = "" + character;
+                    currentStatus = transitions[STATE_ZERO][type];
                 } else {
-                    //6. Movimiento válido
+                    currentStatus = nextStatus;
                     System.out.println("me movi del estado: " + previusStatus
                             + " al estado: " + currentStatus + " con un: "
                             + character);
+                    lexeme = lexeme + character;
+
+                    if (currentStatus == STATE_STRING_END) {
+                        restartAutomata(lexeme, i);
+                        lexeme = "";
+                        currentStatus = STATE_ZERO;
+                    }
                 }
             }
             column = i;
         }
-        //7. Al final del texto, se analiza el último lexema acumulado:
         restartAutomata(lexeme, column);
         printTokens();
         tokens = new ArrayList<>();
     }
 
-    /**
-     * Si el lexema no está vacío, se crea un token y se reinicia el autómata.
-     *
-     * @param lexeme
-     * @param column
-     */
     public void restartAutomata(String lexeme, int column) {
         System.out.println("LEXEME: " + lexeme);
         if (!lexeme.equals("")) {
             Token newToken = new Token(lexeme, getTokenType(currentStatus, lexeme), 0, column);
             tokens.add(newToken);
-            currentStatus = 0;
-            previusStatus = 0;
+            currentStatus = STATE_ZERO;
+            previusStatus = STATE_ZERO;
         }
+        isChain = false;
     }
 
-    /**
-     * Determina el tipo de token según el estado final alcanzado.
-     *
-     * @param currenStatus
-     * @param lexeme
-     * @return
-     */
     public TokenType getTokenType(int currenStatus, String lexeme) {
         switch (currenStatus) {
             case -1 -> {
@@ -166,19 +224,37 @@ public class Automata {
             case 4 -> {
                 return verifyReservedWord(lexeme);
             }
+            case 5 -> {
+                return TokenType.PUNCTUATION_MARKS;
+            }
+            case 6 -> {
+                return TokenType.GROUPING_MARKS;
+            }
+            case 7 -> {
+                return TokenType.ARITHMETIC_OPERATOR;
+            }
+            case 8 -> {
+                return TokenType.STRING;
+            }
+            case 10 -> {
+                return TokenType.LINE_COMMENT;
+            }
+            case 11 -> {
+                return TokenType.BLOCK_COMMENT;
+            }
+            case 12 -> {
+                isChain = true;
+                return TokenType.STRING;
+            }
+            case 14 -> {
+                return TokenType.ERROR;
+            }
             default -> {
             }
         }
         return TokenType.ERROR;
     }
 
-    /**
-     * Si el lexema coincide con una palabra reservada, se clasifica como tal.
-     * Si no, es identificador.
-     *
-     * @param lexeme
-     * @return
-     */
     public TokenType verifyReservedWord(String lexeme) {
         for (String reservedWord : Language.RESERVED_WORDS) {
             if (lexeme.equals(reservedWord)) {
@@ -196,25 +272,37 @@ public class Automata {
         }
     }
 
-    /**
-     * Clasifica el carácter para usarlo en la matriz de transición.
-     *
-     * @param character
-     * @return
-     */
     public int getCharacterType(char character) {
-        int value = -1;
+        int value = ERROR;
         if (Character.isDigit(character)) {
-            return 0;
+            return DIGIT;
         }
-        if (Character.isLetter(character)) {
-            return 1;
+        if (language.characterIsInTheAlphabet(character)) {
+            return LETTER;
         }
         if (character == '.') {
-            return 2;
+            return DOT;
         }
         if (Character.isWhitespace(character)) {
-            return 3;
+            return SPACE;
+        }
+        if (character == '"') {
+            return QUOTE;
+        }
+        if (character == '/') {
+            return SLASH;
+        }
+        if (language.characterIsSpecial(character)) {
+            return SPECIAL_CHARACTER;
+        }
+        if (language.characterIsPunctuationMark(character)) {
+            return PUNCTUATION_MARKS;
+        }
+        if (language.characterIsGroupingMark(character)) {
+            return GROUPING_MARKS;
+        }
+        if (language.characterIsArithmeticOperator(character)) {
+            return ARITHMETIC_OPERATOR;
         }
         return value;
     }
