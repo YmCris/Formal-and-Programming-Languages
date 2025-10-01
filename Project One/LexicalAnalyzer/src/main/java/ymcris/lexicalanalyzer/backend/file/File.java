@@ -1,4 +1,4 @@
-package ymcris.lexicalanalyzer.backend;
+package ymcris.lexicalanalyzer.backend.file;
 
 import java.io.FileReader;
 import java.io.FileWriter;
