@@ -20,7 +20,8 @@ public enum TokenType {
     ARITHMETIC_OPERATOR("Operador Aritmetico", "AMARILLO", 7),
     PUNCTUATION_MARKS("Signo de Puntuacion", "BLANCO", 8),
     GROUPING_MARKS("Signo de Agrupacion", "MORADO", 9),
-    ERROR("Error", "ROJO", 10);
+    ERROR("Error", "ROJO", 10),
+    SPACE("SPACE", "ROJO", 11);
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int number;

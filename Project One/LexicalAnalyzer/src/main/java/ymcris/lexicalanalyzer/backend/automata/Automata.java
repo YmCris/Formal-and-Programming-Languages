@@ -1,9 +1,11 @@
 package ymcris.lexicalanalyzer.backend.automata;
 
 import java.util.ArrayList;
-import ymcris.lexicalanalyzer.backend.language.Language;
+import ymcris.lexicalanalyzer.model.word.Word;
 import ymcris.lexicalanalyzer.model.word.tokens.Token;
+import ymcris.lexicalanalyzer.backend.language.Language;
 import ymcris.lexicalanalyzer.model.word.tokens.TokenType;
+import ymcris.lexicalanalyzer.controller.analyzer.AnalyzerController;
 
 /**
  * The Automata class is the class responsible for be the automata for the
@@ -29,6 +31,8 @@ public class Automata {
     private static final int PUNCTUATION_MARKS = 7;
     private static final int GROUPING_MARKS = 8;
     private static final int ARITHMETIC_OPERATOR = 9;
+    private static final int NEWLINE = 10; // agrega al final de tus columnas
+
     // STATES (ROWS)
     private static final int STATE_ZERO = 0;
     private static final int STATE_ONE = 1;
@@ -48,16 +52,18 @@ public class Automata {
 
     // REFERENCE VARIABLES -----------------------------------------------------
     private Language language = new Language();
-    private ArrayList<Token> tokens = new ArrayList<>();
+    private AnalyzerController analyzerController;
+    private ArrayList<Word> words = new ArrayList<>();
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int currentStatus = 0;
     private int previusStatus = 0;
-    private boolean isChain = false;
-    private int[][] transitions = new int[15][10];
+    public boolean isChain = false;
+    private int[][] transitions = new int[15][11];
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public Automata() {
+    public Automata(AnalyzerController analyzerController) {
+        this.analyzerController = analyzerController;
         // state 0: start
         transitions[STATE_ZERO][DIGIT] = STATE_ONE;
         transitions[STATE_ZERO][LETTER] = STATE_FOUR;
@@ -119,10 +125,11 @@ public class Automata {
         transitions[STATE_NINE][ARITHMETIC_OPERATOR] = STATE_SEVEN;
         transitions[STATE_NINE][SPECIAL_CHARACTER] = STATE_ELEVEN;
 
-        // state 10: line comenter
+        // state 10: line comment
         for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
-            transitions[STATE_TEN][c] = STATE_TEN;
+            transitions[STATE_TEN][c] = STATE_TEN; // todo se queda en el comentario
         }
+        transitions[STATE_TEN][NEWLINE] = STATE_ZERO; // fin del comentario
 
         // state 11: block commenter
         for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
@@ -143,7 +150,7 @@ public class Automata {
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
-    public void analyze(String text) {
+    public ArrayList<Word> analyze(String text) {
         String lexeme = "";
         int column = 0;
         for (int i = 0; i < text.length(); i++) {
@@ -158,6 +165,18 @@ public class Automata {
                     restartAutomata(lexeme, i);
                     lexeme = "";
                 }
+            } else if (currentStatus == STATE_TEN) {
+                // seguimos acumulando caracteres en el comentario
+                lexeme += character;
+
+                // si encontramos un salto de línea, cerramos el comentario
+                if (type == NEWLINE) {
+                    restartAutomata(lexeme, i);
+                    lexeme = "";
+                    currentStatus = STATE_ZERO;
+                }
+
+                continue;
             } else if (type == ERROR) {
                 System.out.println("ERROR EL CARACTER NO ESTA EN EL ALFABETO");
                 currentStatus = ERROR;
@@ -194,16 +213,21 @@ public class Automata {
             }
             column = i;
         }
+        if (currentStatus == STATE_TEN && !lexeme.isEmpty()) {
+            restartAutomata(lexeme, column);
+            lexeme = "";
+            currentStatus = STATE_ZERO;
+        }
         restartAutomata(lexeme, column);
         printTokens();
-        tokens = new ArrayList<>();
+        return words;
     }
 
     public void restartAutomata(String lexeme, int column) {
         System.out.println("LEXEME: " + lexeme);
         if (!lexeme.equals("")) {
             Token newToken = new Token(lexeme, getTokenType(currentStatus, lexeme), 0, column);
-            tokens.add(newToken);
+            words.add(newToken);
             currentStatus = STATE_ZERO;
             previusStatus = STATE_ZERO;
         }
@@ -266,10 +290,15 @@ public class Automata {
 
     public void printTokens() {
         System.out.println("TOKENS ENCONTRADOS");
-        for (Token token : tokens) {
-            System.out.println("Lexema: " + token.getLexeme()
-                    + " token type: " + token.getTokenType());
+        for (Word token : words) {
+            TokenType type = TokenType.ERROR;
+            if (token instanceof Token token1) {
+                type = token1.getTokenType();
+            }
+            System.out.println("Lexema: " + token.getLexeme() + " tipo: " + type.getName()
+                    + " color: " + token.getColor());
         }
+        analyzerController.setWords(words);
     }
 
     public int getCharacterType(char character) {
@@ -303,6 +332,9 @@ public class Automata {
         }
         if (language.characterIsArithmeticOperator(character)) {
             return ARITHMETIC_OPERATOR;
+        }
+        if (character == '\n') {
+            return NEWLINE;
         }
         return value;
     }

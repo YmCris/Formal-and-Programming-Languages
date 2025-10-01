@@ -17,6 +17,7 @@ public class Token extends Word {
     public Token(String lexeme, TokenType tokenType, int row, int column) {
         super(lexeme, row, column, true);
         this.tokenType = tokenType;
+        this.setColor(tokenType.getColor());
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
