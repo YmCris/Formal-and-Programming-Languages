@@ -127,9 +127,9 @@ public class Automata {
 
         // state 10: line comment
         for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
-            transitions[STATE_TEN][c] = STATE_TEN; // todo se queda en el comentario
+            transitions[STATE_TEN][c] = STATE_TEN;
         }
-        transitions[STATE_TEN][NEWLINE] = STATE_ZERO; // fin del comentario
+        transitions[STATE_TEN][NEWLINE] = STATE_ZERO;
 
         // state 11: block commenter
         for (int c = 0; c < transitions[STATE_ZERO].length; c++) {
@@ -150,7 +150,7 @@ public class Automata {
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
-    public ArrayList<Word> analyze(String text) {
+    public ArrayList<Word> analyze(String text, int row) {
         String lexeme = "";
         int column = 0;
         for (int i = 0; i < text.length(); i++) {
@@ -162,31 +162,27 @@ public class Automata {
                     lexeme = lexeme + character;
                 } else {
                     System.out.println("ES UN ESPACIO HAY QUE REINICIAR EL AUTOMATA");
-                    restartAutomata(lexeme, i);
+                    restartAutomata(lexeme, i, row);
                     lexeme = "";
                 }
             } else if (currentStatus == STATE_TEN) {
-                // seguimos acumulando caracteres en el comentario
                 lexeme += character;
-
-                // si encontramos un salto de línea, cerramos el comentario
                 if (type == NEWLINE) {
-                    restartAutomata(lexeme, i);
+                    restartAutomata(lexeme, i, row);
                     lexeme = "";
-                    currentStatus = STATE_ZERO;
+                    currentStatus = STATE_TEN;
                 }
-
                 continue;
             } else if (type == ERROR) {
                 System.out.println("ERROR EL CARACTER NO ESTA EN EL ALFABETO");
                 currentStatus = ERROR;
-                restartAutomata(lexeme, i);
+                restartAutomata(lexeme, i, row);
                 lexeme = "";
                 currentStatus = STATE_ZERO;
             } else {
                 previusStatus = currentStatus;
                 if (currentStatus == ERROR) {
-                    restartAutomata(lexeme, i - 1);
+                    restartAutomata(lexeme, i - 1, row);
                     lexeme = "" + character;
                     currentStatus = transitions[STATE_ZERO][type];
                     continue;
@@ -194,7 +190,7 @@ public class Automata {
                 int nextStatus = transitions[currentStatus][type];
                 if (nextStatus == ERROR) {
                     System.out.println("ERROR");
-                    restartAutomata(lexeme, i - 1);
+                    restartAutomata(lexeme, i - 1, row);
                     lexeme = "" + character;
                     currentStatus = transitions[STATE_ZERO][type];
                 } else {
@@ -205,7 +201,7 @@ public class Automata {
                     lexeme = lexeme + character;
 
                     if (currentStatus == STATE_STRING_END) {
-                        restartAutomata(lexeme, i);
+                        restartAutomata(lexeme, i, row);
                         lexeme = "";
                         currentStatus = STATE_ZERO;
                     }
@@ -214,19 +210,22 @@ public class Automata {
             column = i;
         }
         if (currentStatus == STATE_TEN && !lexeme.isEmpty()) {
-            restartAutomata(lexeme, column);
+            restartAutomata(lexeme, column, row);
             lexeme = "";
             currentStatus = STATE_ZERO;
         }
-        restartAutomata(lexeme, column);
+        restartAutomata(lexeme, column, row);
         printTokens();
         return words;
     }
 
-    public void restartAutomata(String lexeme, int column) {
+    public void restartAutomata(String lexeme, int column, int row) {
         System.out.println("LEXEME: " + lexeme);
         if (!lexeme.equals("")) {
-            Token newToken = new Token(lexeme, getTokenType(currentStatus, lexeme), 0, column);
+            Token newToken = new Token(lexeme, getTokenType(currentStatus, lexeme), row, column);
+            if (currentStatus == STATE_TEN) {
+                newToken.setColor(TokenType.LINE_COMMENT.getColor());
+            }
             words.add(newToken);
             currentStatus = STATE_ZERO;
             previusStatus = STATE_ZERO;

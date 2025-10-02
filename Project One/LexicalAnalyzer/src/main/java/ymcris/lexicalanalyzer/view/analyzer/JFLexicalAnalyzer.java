@@ -12,6 +12,7 @@ import ymcris.lexicalanalyzer.view.file.JDSaveFile;
 import ymcris.lexicalanalyzer.view.file.JDUploadFile;
 import ymcris.lexicalanalyzer.controller.file.FileController;
 import ymcris.lexicalanalyzer.controller.analyzer.AnalyzerController;
+import ymcris.lexicalanalyzer.view.reports.JDReports;
 
 /**
  * The JFrame JFLexicalAnalyzer is the JFrame responsible for displaying the
@@ -26,7 +27,6 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     private FileController fileController;
     private AnalyzerController analyzerController;
 
-    // PRIMITIVE VARIABLES -----------------------------------------------------
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public JFLexicalAnalyzer() {
         initComponents();
@@ -45,10 +45,12 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 analyzerController.updateLines();
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 analyzerController.updateLines();
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 analyzerController.updateLines();
@@ -313,6 +315,7 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveTextActionPerformed
 
     private void btnReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsActionPerformed
+        new JDReports(this).setVisible(true);
     }//GEN-LAST:event_btnReportsActionPerformed
 
     private void btnSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationActionPerformed
@@ -324,7 +327,11 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnAnalyzerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzerActionPerformed
-        analyzerController.analizar();
+        analyzerController.setAreErrors(false);
+        analyzerController.getErrors().clear();
+        analyzerController.getTokensReports().clear();
+        analyzerController.getLexemes().clear();
+        analyzerController.analyze();
     }//GEN-LAST:event_btnAnalyzerActionPerformed
 
 

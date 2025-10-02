@@ -9,8 +9,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.BadLocationException;
 import ymcris.lexicalanalyzer.model.word.Word;
-import ymcris.lexicalanalyzer.backend.automata.Automata;
 import ymcris.lexicalanalyzer.model.word.tokens.Token;
+import ymcris.lexicalanalyzer.backend.automata.Automata;
 import ymcris.lexicalanalyzer.model.word.tokens.TokenType;
 import ymcris.lexicalanalyzer.view.analyzer.JFLexicalAnalyzer;
 
@@ -26,26 +26,25 @@ public class AnalyzerController {
 
     // REFERENCE VARIABLES -----------------------------------------------------
     private Automata automata;
-    private ArrayList<String> lines;
-
     private ArrayList<Word> words;
-
-    private ArrayList<Word> errores;
-    private ArrayList<Word> tokensReportes;
+    private ArrayList<String> lines;
+    private ArrayList<Word> errors;
+    private ArrayList<Token> lexemes;
+    private ArrayList<Token> tokensReports;
     private JFLexicalAnalyzer jFLexicalAnalyzer;
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
-    private int cantidadErrores = 0;
-    private int tokensValidos = 0;
-    public boolean analisisRealizado = false;
+    public boolean areErrors = false;
+    public boolean analysisPerformed = false;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public AnalyzerController(JFLexicalAnalyzer jFLexicalAnalyzer) {
         this.jFLexicalAnalyzer = jFLexicalAnalyzer;
         this.lines = new ArrayList<>();
-        this.errores = new ArrayList<>();
+        this.errors = new ArrayList<>();
         this.words = new ArrayList<>();
-        this.tokensReportes = new ArrayList<>();
+        this.lexemes = new ArrayList<>();
+        this.tokensReports = new ArrayList<>();
         this.automata = new Automata(this);
     }
 
@@ -57,7 +56,7 @@ public class AnalyzerController {
         this.lines.addAll(Arrays.asList(textLines));
     }
 
-    private void insertarToken(JTextPane jtpText, Word word) throws BadLocationException {
+    private void insertToken(JTextPane jtpText, Word word) throws BadLocationException {
         StyledDocument doc = jtpText.getStyledDocument();
         String color = word.getColor();
         Style style = jtpText.addStyle("tokenStyle", null);
@@ -66,51 +65,55 @@ public class AnalyzerController {
             doc.insertString(doc.getLength(), "\n", null);
             return;
         }
+        Token token = null;
+        if (word instanceof Token) {
+            token = new Token(word.getLexeme(), TokenType.IDENTIFIER, word.getRow(), word.getColumn());
+        }
         switch (color) {
             case "AZUL" -> {// palabras reservadas
                 StyleConstants.setForeground(style, Color.BLUE);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.RESERVED_WORD);
+                tokensReports.add(token);
             }
             case "CAFE" -> {// identificadores
                 StyleConstants.setForeground(style, new Color(139, 69, 19));
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.IDENTIFIER);
+                tokensReports.add(token);
             }
             case "VERDE" -> {// números
                 StyleConstants.setForeground(style, Color.GREEN);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.NUMBER);
+                tokensReports.add(token);
             }
             case "NARANJA" -> {// cadena
                 StyleConstants.setForeground(style, Color.ORANGE);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.STRING);
+                tokensReports.add(token);
             }
             case "NEGRO" -> {// decimales
                 StyleConstants.setForeground(style, Color.BLACK);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.DECIMAL);
+                tokensReports.add(token);
             }
             case "VERDE_OSCURO" -> {// comentarios de línea o bloque
                 StyleConstants.setForeground(style, Color.CYAN);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.LINE_COMMENT);
+                tokensReports.add(token);
             }
             case "AMARILLO" -> { // operadores
                 StyleConstants.setForeground(style, Color.YELLOW);
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.ARITHMETIC_OPERATOR);
+                tokensReports.add(token);
             }
             case "MORADO" -> { // agrupación
                 StyleConstants.setForeground(style, new Color(128, 0, 128));
-                tokensValidos++;
-                tokensReportes.add(word);
+                token.setTokenType(TokenType.GROUPING_MARKS);
+                tokensReports.add(token);
             }
             case "ROJO" -> { // errores
                 StyleConstants.setForeground(style, Color.RED);
-                errores.add(word);
-                cantidadErrores++;
+                errors.add(word);
+                areErrors = true;
             }
             default ->
                 StyleConstants.setForeground(style, Color.BLACK);
@@ -123,20 +126,21 @@ public class AnalyzerController {
         try {
             doc.remove(0, doc.getLength());
             for (Word word : words) {
-                insertarToken(jtpText, word);
+                insertToken(jtpText, word);
             }
             doc.insertString(doc.getLength(), "\n", null);
         } catch (BadLocationException e) {
             System.out.println("Ha ocurrido una exception del tipo " + e.getClass().getName() + " al mostrar los tokens en el pane porque " + e.getMessage());
             e.printStackTrace();
         }
-        analisisRealizado = true;
+        analysisPerformed = true;
     }
 
-    public void analizar() {
+    public void analyze() {
         words.clear();
+        int count = 0;
         for (String line : lines) {
-            automata.analyze(line);
+            automata.analyze(line, count++);
             words.add(new Token("\n", TokenType.SPACE, 0, 0));
         }
         showTokensInTextPane(jFLexicalAnalyzer.getJtpText());
@@ -151,6 +155,22 @@ public class AnalyzerController {
         return words;
     }
 
+    public ArrayList<Word> getErrors() {
+        return errors;
+    }
+
+    public ArrayList<Token> getTokensReports() {
+        return tokensReports;
+    }
+
+    public ArrayList<Token> getLexemes() {
+        return lexemes;
+    }
+
+    public boolean isAreErrors() {
+        return areErrors;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setLines(ArrayList<String> textLines) {
         this.lines = textLines;
@@ -158,6 +178,10 @@ public class AnalyzerController {
 
     public void setWords(ArrayList<Word> words) {
         this.words = words;
+    }
+
+    public void setAreErrors(boolean areErrors) {
+        this.areErrors = areErrors;
     }
 
 }
