@@ -60,7 +60,6 @@ public class AnalyzerController {
         StyledDocument doc = jtpText.getStyledDocument();
         String color = word.getColor();
         Style style = jtpText.addStyle("tokenStyle", null);
-        System.out.println("Soy la palabra " + word.getLexeme() + " mi color es " + color);
         if (word.getLexeme().equals("\n")) {
             doc.insertString(doc.getLength(), "\n", null);
             return;
@@ -121,6 +120,15 @@ public class AnalyzerController {
         doc.insertString(doc.getLength(), word.getLexeme() + " ", style);
     }
 
+    private void updateConsole() {
+        StringBuilder builder = new StringBuilder();
+        for (String message : automata.getMessages()) {
+            builder.append(message);
+            builder.append("\n");
+        }
+        jFLexicalAnalyzer.getJtpConsole().setText(builder.toString());
+    }
+
     public void showTokensInTextPane(JTextPane jtpText) {
         StyledDocument doc = jtpText.getStyledDocument();
         try {
@@ -143,7 +151,9 @@ public class AnalyzerController {
             automata.analyze(line, count++);
             words.add(new Token("\n", TokenType.SPACE, 0, 0));
         }
+        updateConsole();
         showTokensInTextPane(jFLexicalAnalyzer.getJtpText());
+        automata.getMessages().clear();
     }
 
     // GETTERS -----------------------------------------------------------------

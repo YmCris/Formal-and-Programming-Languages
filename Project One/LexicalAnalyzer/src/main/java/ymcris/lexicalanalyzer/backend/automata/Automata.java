@@ -54,6 +54,7 @@ public class Automata {
     private Language language = new Language();
     private AnalyzerController analyzerController;
     private ArrayList<Word> words = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>();
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int currentStatus = 0;
@@ -156,12 +157,10 @@ public class Automata {
         for (int i = 0; i < text.length(); i++) {
             char character = text.charAt(i);
             int type = getCharacterType(character);
-            System.out.println("En el caracter " + character + " soy del tipo " + type);
             if (type == SPACE) {
                 if (currentStatus == STATE_EIGHT || currentStatus == STATE_STRING_END) {
                     lexeme = lexeme + character;
                 } else {
-                    System.out.println("ES UN ESPACIO HAY QUE REINICIAR EL AUTOMATA");
                     restartAutomata(lexeme, i, row);
                     lexeme = "";
                 }
@@ -174,7 +173,6 @@ public class Automata {
                 }
                 continue;
             } else if (type == ERROR) {
-                System.out.println("ERROR EL CARACTER NO ESTA EN EL ALFABETO");
                 currentStatus = ERROR;
                 restartAutomata(lexeme, i, row);
                 lexeme = "";
@@ -189,14 +187,13 @@ public class Automata {
                 }
                 int nextStatus = transitions[currentStatus][type];
                 if (nextStatus == ERROR) {
-                    System.out.println("ERROR");
                     restartAutomata(lexeme, i - 1, row);
                     lexeme = "" + character;
                     currentStatus = transitions[STATE_ZERO][type];
                 } else {
                     currentStatus = nextStatus;
-                    System.out.println("me movi del estado: " + previusStatus
-                            + " al estado: " + currentStatus + " con un: "
+                    messages.add("Me movi del estado: " + previusStatus
+                            + " al estado: " + currentStatus + " con: "
                             + character);
                     lexeme = lexeme + character;
 
@@ -215,12 +212,11 @@ public class Automata {
             currentStatus = STATE_ZERO;
         }
         restartAutomata(lexeme, column, row);
-        printTokens();
+        analyzerController.setWords(words);
         return words;
     }
 
     public void restartAutomata(String lexeme, int column, int row) {
-        System.out.println("LEXEME: " + lexeme);
         if (!lexeme.equals("")) {
             Token newToken = new Token(lexeme, getTokenType(currentStatus, lexeme), row, column);
             if (currentStatus == STATE_TEN) {
@@ -229,7 +225,9 @@ public class Automata {
             words.add(newToken);
             currentStatus = STATE_ZERO;
             previusStatus = STATE_ZERO;
+            messages.add("Guardando el token del tipo " + newToken.getTokenType().getName() + " lexema: " + newToken.getLexeme());
         }
+        messages.add("Reiniciando el automata");
         isChain = false;
     }
 
@@ -287,19 +285,6 @@ public class Automata {
         return TokenType.IDENTIFIER;
     }
 
-    public void printTokens() {
-        System.out.println("TOKENS ENCONTRADOS");
-        for (Word token : words) {
-            TokenType type = TokenType.ERROR;
-            if (token instanceof Token token1) {
-                type = token1.getTokenType();
-            }
-            System.out.println("Lexema: " + token.getLexeme() + " tipo: " + type.getName()
-                    + " color: " + token.getColor());
-        }
-        analyzerController.setWords(words);
-    }
-
     public int getCharacterType(char character) {
         int value = ERROR;
         if (Character.isDigit(character)) {
@@ -337,4 +322,9 @@ public class Automata {
         }
         return value;
     }
+
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
+
 }
