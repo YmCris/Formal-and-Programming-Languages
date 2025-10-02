@@ -73,6 +73,7 @@ public class JDReports extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTokenReport = new javax.swing.JTable();
         btnTokenReport = new javax.swing.JButton();
+        btnTokenReport1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         pnlFormulario10 = new javax.swing.JPanel();
         lblTitulo10 = new javax.swing.JLabel();
@@ -277,6 +278,19 @@ public class JDReports extends javax.swing.JDialog {
             }
         });
 
+        btnTokenReport1.setBackground(new java.awt.Color(102, 102, 102));
+        btnTokenReport1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTokenReport1.setForeground(new java.awt.Color(255, 255, 255));
+        btnTokenReport1.setText("Ver Diagrama");
+        btnTokenReport1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTokenReport.setOpaque(false);
+        btnTokenReport.setBorderPainted(false);
+        btnTokenReport1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTokenReport1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFormulario5Layout = new javax.swing.GroupLayout(pnlFormulario5);
         pnlFormulario5.setLayout(pnlFormulario5Layout);
         pnlFormulario5Layout.setHorizontalGroup(
@@ -291,11 +305,14 @@ public class JDReports extends javax.swing.JDialog {
                         .addComponent(lblTitulo8, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlFormulario5Layout.createSequentialGroup()
                         .addGap(204, 204, 204)
-                        .addComponent(jLabel5))
-                    .addGroup(pnlFormulario5Layout.createSequentialGroup()
-                        .addGap(357, 357, 357)
-                        .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5)))
                 .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormulario5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTokenReport1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(246, 246, 246))
         );
         pnlFormulario5Layout.setVerticalGroup(
             pnlFormulario5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,9 +323,11 @@ public class JDReports extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(pnlFormulario5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTokenReport1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         JTPFormularios.addTab("Reporte de Tokens", pnlFormulario5);
@@ -480,12 +499,17 @@ public class JDReports extends javax.swing.JDialog {
         addLexemes();
     }//GEN-LAST:event_btnLexemeCountActionPerformed
 
+    private void btnTokenReport1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTokenReport1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTokenReport1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane JTPFormularios;
     private javax.swing.JButton btnErrorReport;
     private javax.swing.JButton btnLexemeCount;
     private javax.swing.JButton btnTokenReport;
+    private javax.swing.JButton btnTokenReport1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
