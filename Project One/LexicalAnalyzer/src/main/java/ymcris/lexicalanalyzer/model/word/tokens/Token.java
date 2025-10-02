@@ -19,7 +19,7 @@ public class Token extends Word {
         this.tokenType = tokenType;
         this.setColor(tokenType.getColor());
     }
-
+    
     // SPECIFIC METHODS --------------------------------------------------------
     // GETTERS -----------------------------------------------------------------
     public TokenType getTokenType() {
