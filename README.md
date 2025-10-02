@@ -5,7 +5,7 @@
  
 ## Descripciones de Proyectos:
 1. Práctica 1: Analizador léxico simple.
-2. Proyecto 1: Analizador léxico con AFD.
+2. Proyecto 1: Analizador léxico con AFD. (https://drive.google.com/drive/folders/1MEsNM4IicVc4t3_9ougtVuc5uUJlJgLZ?usp=sharing)
 
 ## Manual de Usuario:
 1. Práctica 1: 
