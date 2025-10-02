@@ -173,6 +173,7 @@ public class Automata {
                 }
                 continue;
             } else if (type == ERROR) {
+                messages.add("Error, el caracter " + character + " no esta en el lenguaje");
                 currentStatus = ERROR;
                 restartAutomata(lexeme, i, row);
                 lexeme = "";
