@@ -13,6 +13,7 @@ import ymcris.lexicalanalyzer.view.file.JDUploadFile;
 import ymcris.lexicalanalyzer.view.reports.JDReports;
 import ymcris.lexicalanalyzer.controller.file.FileController;
 import ymcris.lexicalanalyzer.controller.analyzer.AnalyzerController;
+import ymcris.lexicalanalyzer.view.simulation.JDSimulation;
 
 /**
  * The JFrame JFLexicalAnalyzer is the JFrame responsible for displaying the
@@ -349,7 +350,7 @@ public class JFLexicalAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportsActionPerformed
 
     private void btnSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulationActionPerformed
-
+        new JDSimulation(this).setVisible(true);
     }//GEN-LAST:event_btnSimulationActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
