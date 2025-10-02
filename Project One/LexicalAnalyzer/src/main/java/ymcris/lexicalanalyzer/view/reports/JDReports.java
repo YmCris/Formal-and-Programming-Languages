@@ -2,10 +2,11 @@ package ymcris.lexicalanalyzer.view.reports;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import ymcris.lexicalanalyzer.model.word.Word;
+import ymcris.lexicalanalyzer.view.diagram.JDDiagram;
 import ymcris.lexicalanalyzer.model.word.tokens.Token;
 import ymcris.lexicalanalyzer.view.analyzer.JFLexicalAnalyzer;
 import ymcris.lexicalanalyzer.controller.reports.ReportsController;
-import ymcris.lexicalanalyzer.model.word.Word;
 
 /**
  * The JDialog JDReports is the JDialog responsible for displaying the reports
@@ -49,7 +50,7 @@ public class JDReports extends javax.swing.JDialog {
     private void addLexemes() {
         tblLexemes = (DefaultTableModel) tblLexemeCount.getModel();
         for (Token token : reportsController.getReportTokens()) {
-            tblLexemes.addRow(new Object[]{token.getLexeme(),token.getTokenType(),"x"});
+            tblLexemes.addRow(new Object[]{token.getLexeme(), token.getTokenType(), "x"});
         }
     }
 
@@ -73,7 +74,7 @@ public class JDReports extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTokenReport = new javax.swing.JTable();
         btnTokenReport = new javax.swing.JButton();
-        btnTokenReport1 = new javax.swing.JButton();
+        btnWatchDiagram = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         pnlFormulario10 = new javax.swing.JPanel();
         lblTitulo10 = new javax.swing.JLabel();
@@ -278,16 +279,16 @@ public class JDReports extends javax.swing.JDialog {
             }
         });
 
-        btnTokenReport1.setBackground(new java.awt.Color(102, 102, 102));
-        btnTokenReport1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnTokenReport1.setForeground(new java.awt.Color(255, 255, 255));
-        btnTokenReport1.setText("Ver Diagrama");
-        btnTokenReport1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnTokenReport.setOpaque(false);
-        btnTokenReport.setBorderPainted(false);
-        btnTokenReport1.addActionListener(new java.awt.event.ActionListener() {
+        btnWatchDiagram.setBackground(new java.awt.Color(102, 102, 102));
+        btnWatchDiagram.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnWatchDiagram.setForeground(new java.awt.Color(255, 255, 255));
+        btnWatchDiagram.setText("Ver Diagrama");
+        btnWatchDiagram.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnWatchDiagram.setOpaque(false);
+        btnWatchDiagram.setBorderPainted(false);
+        btnWatchDiagram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTokenReport1ActionPerformed(evt);
+                btnWatchDiagramActionPerformed(evt);
             }
         });
 
@@ -311,7 +312,7 @@ public class JDReports extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnTokenReport1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnWatchDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(246, 246, 246))
         );
         pnlFormulario5Layout.setVerticalGroup(
@@ -326,7 +327,7 @@ public class JDReports extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(pnlFormulario5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTokenReport, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTokenReport1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnWatchDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
@@ -499,9 +500,15 @@ public class JDReports extends javax.swing.JDialog {
         addLexemes();
     }//GEN-LAST:event_btnLexemeCountActionPerformed
 
-    private void btnTokenReport1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTokenReport1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTokenReport1ActionPerformed
+    private void btnWatchDiagramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWatchDiagramActionPerformed
+        int row = tblTokenReport.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String lexema = String.valueOf(tblTokenReport.getValueAt(row, 1));
+        new JDDiagram(lexema).setVisible(true);
+    }//GEN-LAST:event_btnWatchDiagramActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -509,7 +516,7 @@ public class JDReports extends javax.swing.JDialog {
     private javax.swing.JButton btnErrorReport;
     private javax.swing.JButton btnLexemeCount;
     private javax.swing.JButton btnTokenReport;
-    private javax.swing.JButton btnTokenReport1;
+    private javax.swing.JButton btnWatchDiagram;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;

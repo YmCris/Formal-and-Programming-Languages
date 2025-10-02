@@ -15,14 +15,6 @@
     
     <!-- Dependencies of the project -->
     <dependencies>
-        
-    <!-- MySQL (It'snt needed, but i want to try something)-->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>9.3.0</version>
-        </dependency>
-        
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
