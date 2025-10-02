@@ -31,7 +31,7 @@ public class Automata {
     private static final int PUNCTUATION_MARKS = 7;
     private static final int GROUPING_MARKS = 8;
     private static final int ARITHMETIC_OPERATOR = 9;
-    private static final int NEWLINE = 10; // agrega al final de tus columnas
+    public static final int NEWLINE = 10;
 
     // STATES (ROWS)
     private static final int STATE_ZERO = 0;
@@ -322,6 +322,37 @@ public class Automata {
             return NEWLINE;
         }
         return value;
+    }
+
+    public int getNextState(int state, int type) {
+        if (state < 0 || state >= transitions.length) {
+            return ERROR;
+        }
+        if (type < 0 || type >= transitions[state].length) {
+            return ERROR;
+        }
+        return transitions[state][type];
+    }
+
+    public int getInitialState() {
+        return STATE_ZERO;
+    }
+
+    public boolean isStringState(int state) {
+        return state == STATE_EIGHT || state == STATE_STRING_END;
+    }
+
+    public boolean isLineCommentState(int state) {
+        return state == STATE_TEN;
+    }
+
+    public boolean isErrorState(int state) {
+        return state == ERROR || state == STATE_ERROR_ABSORB;
+    }
+
+    public boolean isAcceptingState(int state) {
+        TokenType tt = getTokenType(state, "");
+        return tt != TokenType.ERROR;
     }
 
     public ArrayList<String> getMessages() {
