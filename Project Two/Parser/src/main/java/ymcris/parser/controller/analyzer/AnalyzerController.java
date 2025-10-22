@@ -1,6 +1,7 @@
 package ymcris.parser.controller.analyzer;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import javax.swing.JTextPane;
@@ -9,9 +10,9 @@ import ymcris.parser.model.word.Word;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.BadLocationException;
+import ymcris.parser.backend.analyzer.Analyzer;
 import ymcris.parser.model.word.tokens.Token;
 import ymcris.parser.view.analyzer.JFAnalyzer;
-import ymcris.parser.backend.automata.Automata;
 import ymcris.parser.model.word.tokens.TokenType;
 
 /**
@@ -27,13 +28,13 @@ import ymcris.parser.model.word.tokens.TokenType;
 public class AnalyzerController {
 
     // REFERENCE VARIABLES -----------------------------------------------------
-    private Automata automata;
+    private Analyzer analyzer;
+    private JFAnalyzer jFAnalyzer;
     private ArrayList<Word> words;
-    private ArrayList<String> lines;
     private ArrayList<Word> errors;
+    private ArrayList<String> lines;
     private ArrayList<Token> lexemes;
     private ArrayList<Token> tokensReports;
-    private JFAnalyzer jFAnalyzer;
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     public boolean areErrors = false;
@@ -42,12 +43,12 @@ public class AnalyzerController {
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public AnalyzerController(JFAnalyzer jFLexicalAnalyzer) {
         this.jFAnalyzer = jFLexicalAnalyzer;
+        this.analyzer = new Analyzer();
         this.lines = new ArrayList<>();
         this.errors = new ArrayList<>();
         this.words = new ArrayList<>();
         this.lexemes = new ArrayList<>();
         this.tokensReports = new ArrayList<>();
-        this.automata = new Automata(this);
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -122,19 +123,11 @@ public class AnalyzerController {
         doc.insertString(doc.getLength(), word.getLexeme() + " ", style);
     }
 
-    private void updateConsole() {
-        StringBuilder builder = new StringBuilder();
-        for (String message : automata.getMessages()) {
-            builder.append(message);
-            builder.append("\n");
-        }
-        jFAnalyzer.getJtpConsole().setText(builder.toString());
-    }
-
     public void showTokensInTextPane(JTextPane jtpText) {
         StyledDocument doc = jtpText.getStyledDocument();
         try {
             doc.remove(0, doc.getLength());
+            words = analyzer.getWords();
             for (Word word : words) {
                 insertToken(jtpText, word);
             }
@@ -146,25 +139,23 @@ public class AnalyzerController {
         analysisPerformed = true;
     }
 
-    public void analyze() {
+    public void analyze()  {
         words.clear();
         int count = 0;
         for (String line : lines) {
-            automata.analyze(line, count++);
-            words.add(new Token("\n", TokenType.SPACE, 0, 0));
+            try {
+                analyzer.analyze(line, count++);
+                words.add(new Token("\n", TokenType.SPACE, 0, 0));
+            } catch (IOException e) {
+                
+            }
         }
-        updateConsole();
         showTokensInTextPane(jFAnalyzer.getJtpText());
-        automata.getMessages().clear();
     }
 
     // GETTERS -----------------------------------------------------------------
     public ArrayList<String> getLines() {
         return lines;
-    }
-
-    public ArrayList<Word> getWords() {
-        return words;
     }
 
     public ArrayList<Word> getErrors() {
@@ -186,10 +177,6 @@ public class AnalyzerController {
     // SETTERS -----------------------------------------------------------------
     public void setLines(ArrayList<String> textLines) {
         this.lines = textLines;
-    }
-
-    public void setWords(ArrayList<Word> words) {
-        this.words = words;
     }
 
     public void setAreErrors(boolean areErrors) {

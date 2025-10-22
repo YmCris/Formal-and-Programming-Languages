@@ -100,8 +100,6 @@ public class JFAnalyzer extends javax.swing.JFrame {
         btnReports = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         btnAnalyzer = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jtpConsole = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,27 +200,6 @@ public class JFAnalyzer extends javax.swing.JFrame {
             }
         });
 
-        jtpConsole.setEditable(false);
-        jtpConsole.setBackground(new java.awt.Color(100, 100, 105));
-        jtpConsole.setBorder(null);
-        jtpConsole.setForeground(new java.awt.Color(229, 229, 231));
-        jtpConsole.setCaretColor(new java.awt.Color(229, 229, 231));
-        jtpConsole.setDisabledTextColor(new java.awt.Color(229, 229, 231));
-        jtpConsole.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jtpConsole.setSelectionColor(new java.awt.Color(255, 255, 255));
-        jtpConsole.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtpConsoleKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtpConsoleKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtpConsoleKeyTyped(evt);
-            }
-        });
-        jScrollPane4.setViewportView(jtpConsole);
-
         jdpBackground.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnChooseFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -233,7 +210,6 @@ public class JFAnalyzer extends javax.swing.JFrame {
         jdpBackground.setLayer(btnReports, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnExit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnAnalyzer, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdpBackground.setLayer(jScrollPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdpBackgroundLayout = new javax.swing.GroupLayout(jdpBackground);
         jdpBackground.setLayout(jdpBackgroundLayout);
@@ -263,13 +239,10 @@ public class JFAnalyzer extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jdpBackgroundLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2)
-                            .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jSeparator2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdpBackgroundLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jdpBackgroundLayout.setVerticalGroup(
@@ -285,9 +258,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -347,18 +318,6 @@ public class JFAnalyzer extends javax.swing.JFrame {
         analyzerController.analyze();
     }//GEN-LAST:event_btnAnalyzerActionPerformed
 
-    private void jtpConsoleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyPressed
-
-    }//GEN-LAST:event_jtpConsoleKeyPressed
-
-    private void jtpConsoleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyReleased
-
-    }//GEN-LAST:event_jtpConsoleKeyReleased
-
-    private void jtpConsoleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyTyped
-
-    }//GEN-LAST:event_jtpConsoleKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalyzer;
@@ -368,21 +327,15 @@ public class JFAnalyzer extends javax.swing.JFrame {
     private javax.swing.JButton btnSaveText;
     private javax.swing.JButton btnSearchWord;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JDesktopPane jdpBackground;
-    private javax.swing.JTextPane jtpConsole;
     private javax.swing.JTextPane jtpText;
     private javax.swing.JTextField txtSearchWord;
     // End of variables declaration//GEN-END:variables
 
     public JTextPane getJtpText() {
         return jtpText;
-    }
-
-    public JTextPane getJtpConsole() {
-        return jtpConsole;
     }
 
     public AnalyzerController getAnalyzerController() {

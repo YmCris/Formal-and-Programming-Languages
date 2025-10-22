@@ -27,6 +27,10 @@ public class Word {
         this.token = token;
     }
 
+    public void print() {
+        System.out.println("Lexeme: " + this.getLexeme() + " line: " + this.getRow() + " column: " + this.getColumn() + " token: " + token);
+    }
+
     // GETTERS -----------------------------------------------------------------
     public int getRow() {
         return row;

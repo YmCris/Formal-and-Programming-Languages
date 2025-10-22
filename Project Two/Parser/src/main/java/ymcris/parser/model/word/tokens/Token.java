@@ -20,8 +20,13 @@ public class Token extends Word {
         this.tokenType = tokenType;
         this.setColor(tokenType.getColor());
     }
-    
+
     // SPECIFIC METHODS --------------------------------------------------------
+    @Override
+    public void print() {
+        System.out.println("TokenType: " + tokenType.getName() + " lexeme: " + this.getLexeme() + " line: " + this.getRow() + " column: " + this.getColumn());
+    }
+
     // GETTERS -----------------------------------------------------------------
     public TokenType getTokenType() {
         return tokenType;

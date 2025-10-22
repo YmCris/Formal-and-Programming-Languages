@@ -3,13 +3,13 @@ package ymcris.parser.model.word.errors;
 import ymcris.parser.model.word.Word;
 
 /**
- * The Error class is the class responsible for be an error
+ * The ErrorWord class is the class responsible for be an error
  *
  * @author YmCris
  * @see Word
  * @since Oct 16, 2025
  */
-public class Error extends Word {
+public class ErrorWord extends Word {
 
     // REFERENCE VARIABLES -----------------------------------------------------
     private String description;
@@ -19,10 +19,14 @@ public class Error extends Word {
     private char errorCharacter;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public Error(String lexeme, int row, int column, boolean isToken, String description, ErrorType errorType) {
+    public ErrorWord(String lexeme, int row, int column, boolean isToken,
+            char errorCharacter, ErrorType errorType) {
+        
         super(lexeme, row, column, isToken);
-        this.description = description;
+        
+        this.errorCharacter = errorCharacter;
         this.errorType = errorType;
+        this.description = errorType.getDescription();
     }
 
     // GETTERS -----------------------------------------------------------------
