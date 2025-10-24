@@ -14,26 +14,25 @@ public class Language {
      * ' ' Space '\t' Tabulation '\n' Line Break
      */
     public static final char[] SPECIAL_CHARACTERS = {' ', '\t', '\n'};
-    
+
     public static final char[] ALPHABET = {
         'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G',
         'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N',
         'ñ', 'Ñ', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T',
-        'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z',
-    };
-    
+        'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z',};
+
     public static final int[] DIGITS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    
+
     public static final char[] PUNCTUATION_MARKS = {'.', ',', ';', ':'};
-    
+
     public static final char[] GROUPING_MARKS = {'(', ')', '[', ']', '{', '}'};
-    
+
     public static final char[] ARITHMETIC_OPERATORS = {'+', '-', '*', '/', '%', '='};
-    
+
     public static final String[] COMMENTS = {"//", "/*", "*/"};
-    
+
     public static final String[] RESERVED_WORDS = {
-        "SI", "si", "ENTONCES", "entonces", "entero", "numero", "cadena", 
+        "SI", "si", "ENTONCES", "entonces", "entero", "numero", "cadena",
         "ESCRIBIR", "escribir", "DEFINIR", "COMO"
     };
 

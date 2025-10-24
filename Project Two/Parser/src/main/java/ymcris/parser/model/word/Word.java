@@ -28,7 +28,9 @@ public class Word {
     }
 
     public void print() {
-        System.out.println("Lexeme: " + this.getLexeme() + " line: " + this.getRow() + " column: " + this.getColumn() + " token: " + token);
+        if (!lexeme.equals("\n")) {
+            System.out.println("Lexeme: " + this.getLexeme() + " line: " + this.getRow() + " column: " + this.getColumn() + " token: " + token);
+        }
     }
 
     // GETTERS -----------------------------------------------------------------

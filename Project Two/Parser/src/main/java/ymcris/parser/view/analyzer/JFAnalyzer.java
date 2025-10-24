@@ -42,21 +42,25 @@ public class JFAnalyzer extends javax.swing.JFrame {
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
+    public void showMessage(String title, String message) {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void addKeyRecognitionToThePanel() {
         jtpText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                analyzerController.updateLines();
+                analyzerController.getComponentsUpdater().updateLines();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                analyzerController.updateLines();
+                analyzerController.getComponentsUpdater().updateLines();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                analyzerController.updateLines();
+                analyzerController.getComponentsUpdater().updateLines();
             }
         });
     }
@@ -311,10 +315,10 @@ public class JFAnalyzer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnAnalyzerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzerActionPerformed
-        analyzerController.setAreErrors(false);
-        analyzerController.getErrors().clear();
-        analyzerController.getTokensReports().clear();
-        analyzerController.getLexemes().clear();
+        analyzerController.restartAnalysis();
+        analyzerController.getComponentsUpdater().setAreErrors(false);
+        analyzerController.getComponentsUpdater().getErrors().clear();
+        analyzerController.getComponentsUpdater().getTokensReports().clear();
         analyzerController.analyze();
     }//GEN-LAST:event_btnAnalyzerActionPerformed
 

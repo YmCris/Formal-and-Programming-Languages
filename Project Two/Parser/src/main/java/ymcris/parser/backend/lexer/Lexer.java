@@ -364,11 +364,11 @@ public class Lexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\1\1\2\4\2\3\1\5"+
-    "\3\6\2\3\1\6\5\3\1\7\1\3\1\4";
+    "\1\0\1\1\1\2\2\3\1\4\1\1\2\5\2\4"+
+    "\1\6\3\7\2\4\1\7\5\4\1\10\1\4\1\5";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[25];
+    int [] result = new int[26];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -393,13 +393,13 @@ public class Lexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\20\0\20\0\40\0\60\0\100\0\120\0\140"+
-    "\0\160\0\200\0\100\0\20\0\220\0\240\0\260\0\300"+
-    "\0\320\0\340\0\360\0\u0100\0\u0110\0\u0120\0\60\0\u0130"+
-    "\0\60";
+    "\0\0\0\20\0\20\0\20\0\40\0\60\0\100\0\120"+
+    "\0\140\0\160\0\200\0\100\0\20\0\220\0\240\0\260"+
+    "\0\300\0\320\0\340\0\360\0\u0100\0\u0110\0\u0120\0\60"+
+    "\0\u0130\0\60";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[25];
+    int [] result = new int[26];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -422,19 +422,19 @@ public class Lexer {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\2\1\4\1\5\1\6\1\7\1\10"+
-    "\2\5\1\11\3\5\1\12\22\0\1\3\15\0\1\5"+
-    "\4\0\1\5\1\0\11\5\7\0\2\13\7\0\6\14"+
-    "\1\15\2\16\15\14\1\15\2\10\7\14\1\5\4\0"+
-    "\1\5\1\0\5\5\1\17\4\5\4\0\1\5\1\0"+
-    "\6\5\1\20\2\5\7\14\2\13\15\14\1\21\2\16"+
-    "\7\14\1\5\4\0\1\5\1\0\7\5\1\22\2\5"+
-    "\4\0\1\5\1\0\4\5\1\23\4\5\7\14\2\0"+
-    "\7\14\1\5\4\0\1\5\1\0\2\5\1\24\7\5"+
-    "\4\0\1\5\1\0\7\5\1\25\2\5\4\0\1\5"+
-    "\1\0\3\5\1\26\6\5\4\0\1\5\1\0\2\5"+
-    "\1\27\7\5\4\0\1\5\1\0\2\5\1\30\7\5"+
-    "\4\0\1\5\1\0\6\5\1\31\2\5";
+    "\1\2\1\3\1\4\1\2\1\5\1\6\1\7\1\10"+
+    "\1\11\2\6\1\12\3\6\1\13\22\0\1\4\15\0"+
+    "\1\6\4\0\1\6\1\0\11\6\7\0\2\14\7\0"+
+    "\6\15\1\16\2\17\15\15\1\16\2\11\7\15\1\6"+
+    "\4\0\1\6\1\0\5\6\1\20\4\6\4\0\1\6"+
+    "\1\0\6\6\1\21\2\6\7\15\2\14\15\15\1\22"+
+    "\2\17\7\15\1\6\4\0\1\6\1\0\7\6\1\23"+
+    "\2\6\4\0\1\6\1\0\4\6\1\24\4\6\7\15"+
+    "\2\0\7\15\1\6\4\0\1\6\1\0\2\6\1\25"+
+    "\7\6\4\0\1\6\1\0\7\6\1\26\2\6\4\0"+
+    "\1\6\1\0\3\6\1\27\6\6\4\0\1\6\1\0"+
+    "\2\6\1\30\7\6\4\0\1\6\1\0\2\6\1\31"+
+    "\7\6\4\0\1\6\1\0\6\6\1\32\2\6";
 
   private static int [] zzUnpacktrans() {
     int [] result = new int[320];
@@ -480,10 +480,10 @@ public class Lexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\10\1\1\11\15\1";
+    "\1\0\3\11\10\1\1\11\15\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[25];
+    int [] result = new int[26];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -563,15 +563,17 @@ public class Lexer {
   /* user code: */
 
     // REFERENCE VARIABLES -----------------------------------------------------
+
     private Language language = new Language();
     ArrayList<Word> words = new ArrayList<>();// Save Tokens and Errors
 
     // SPECIFIC METHODS --------------------------------------------------------
-    public void saveError(Word word, ErrorType errorType){
+
+    public void saveError(Word word, ErrorType errorType, Character errorChar){
         if(!word.isToken()){
 
             ErrorWord error = new ErrorWord(word.getLexeme(), word.getRow(), word.getColumn(),
-            false, 'x', errorType);
+            false, errorChar , errorType);
 
             words.add(error);
 
@@ -1009,37 +1011,42 @@ public class Lexer {
             { System.out.println("INVALID CHARACTER");
             }
           // fall through
-          case 8: break;
+          case 9: break;
           case 2:
             { /*IGNORE*/
             }
           // fall through
-          case 9: break;
-          case 3:
-            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);
-            }
-          // fall through
           case 10: break;
-          case 4:
-            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);
+          case 3:
+            { words.add(new Word("\n", 0, 0, false));
             }
           // fall through
           case 11: break;
-          case 5:
-            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DECIMAL);
+          case 4:
+            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);
             }
           // fall through
           case 12: break;
-          case 6:
-            { saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR);
+          case 5:
+            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);
             }
           // fall through
           case 13: break;
-          case 7:
-            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);
+          case 6:
+            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DECIMAL);
             }
           // fall through
           case 14: break;
+          case 7:
+            { saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));
+            }
+          // fall through
+          case 15: break;
+          case 8:
+            { saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);
+            }
+          // fall through
+          case 16: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

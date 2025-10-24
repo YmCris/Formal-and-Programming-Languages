@@ -27,15 +27,17 @@ import ymcris.parser.model.word.tokens.TokenType;
 %{
 
     // REFERENCE VARIABLES -----------------------------------------------------
+
     private Language language = new Language();
     ArrayList<Word> words = new ArrayList<>();// Save Tokens and Errors
 
     // SPECIFIC METHODS --------------------------------------------------------
-    public void saveError(Word word, ErrorType errorType){
+
+    public void saveError(Word word, ErrorType errorType, Character errorChar){
         if(!word.isToken()){
 
             ErrorWord error = new ErrorWord(word.getLexeme(), word.getRow(), word.getColumn(),
-            false, 'x', errorType);
+            false, errorChar , errorType);
 
             words.add(error);
 
@@ -78,7 +80,7 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 {Identifier}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);}
 {Number}            {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);}
 {Decimal}           {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DECIMAL);}
-{NUM_MAL}           {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR);}
+{NUM_MAL}           {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
 {LineTerminator}    {/*IGNORE*/}
 {WhiteSpace}        {/*IGNORE*/}
 [^]                 {System.out.println("INVALID CHARACTER");}

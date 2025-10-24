@@ -21,12 +21,21 @@ public class ErrorWord extends Word {
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public ErrorWord(String lexeme, int row, int column, boolean isToken,
             char errorCharacter, ErrorType errorType) {
-        
+
         super(lexeme, row, column, isToken);
-        
+
         this.errorCharacter = errorCharacter;
         this.errorType = errorType;
         this.description = errorType.getDescription();
+    }
+
+    @Override
+    public void print() {
+        System.out.println(
+                "Lexeme: " + this.getLexeme() + " Error Character: " + errorCharacter
+                + " Error type: " + errorType + " Description: " + description
+                + " line: " + this.getRow() + " column: " + this.getColumn()
+        );
     }
 
     // GETTERS -----------------------------------------------------------------

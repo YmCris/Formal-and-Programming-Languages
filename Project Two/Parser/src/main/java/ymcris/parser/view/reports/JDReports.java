@@ -474,7 +474,7 @@ public class JDReports extends javax.swing.JDialog {
     }//GEN-LAST:event_btnTokenReportActionPerformed
 
     private void btnLexemeCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLexemeCountActionPerformed
-        if (reportsController.getjFLexicalAnalyzer().getAnalyzerController().areErrors) {
+        if (reportsController.getjFLexicalAnalyzer().getAnalyzerController().getComponentsUpdater().isAreErrors()) {
             JOptionPane.showMessageDialog(null, "NO PUEDES HACER ESTE REPORTE PORQUE HAY ERRORES", "ERROR", JOptionPane.WARNING_MESSAGE);
             return;
         }
