@@ -2,7 +2,6 @@
 
 package ymcris.parser.backend.lexer;
 
-import java.lang.Error;
 import java.util.ArrayList;
 import ymcris.parser.model.word.Word;
 import ymcris.parser.model.word.tokens.Token;
@@ -63,6 +62,44 @@ import ymcris.parser.model.word.tokens.TokenType;
 
 /* REGULAR EXPRESSIONS  IDENTIFIERS, NUMBERS, DECIMALS, RESERVED WORDS */
 
+
+/* RESERVED WORDS */
+SI      = [Ss][Ii]
+ENTONCES = [Ee][Nn][Tt][Oo][Nn][Cc][Ee][Ss]
+ENTERO  = [Ee][Nn][Tt][Ee][Rr][Oo]
+NUMERO  = [Nn][Uu][Mm][Ee][Rr][Oo]
+CADENA  = [Cc][Aa][Dd][Ee][Nn][Aa]
+ESCRIBIR = [Ee][Ss][Cc][Rr][Ii][Bb][Ii][Rr]
+DEFINIR = [Dd][Ee][Ff][Ii][Nn][Ii][Rr]
+COMO    = [Cc][Oo][Mm][Oo]
+
+/* STRINGS */
+StringLiteral = \"([^\"\n\r])*\"  // Comienza y termina con comillas, sin saltos de línea
+
+
+/* PUNCTUATION */
+Period       = \.
+Comma        = ,
+Semicolon    = ;
+Colon        = :
+
+/* ARITHMETIC OPERATORS */
+Plus         = \+
+Minus        = \-
+Multiply     = \*
+Divide       = \/
+Modulo       = %
+Equal        = =
+
+/* GROUPING SYMBOLS */
+LParen      = \(
+RParen      = \)
+LBracket    = \[
+RBracket    = \]
+LBrace      = \{
+RBrace      = \}
+
+
 Identifier = [:jletter:] [:jletterdigit:]*
 Digit = [0-9]
 Number = 0 | [1-9]{Digit}*
@@ -75,12 +112,52 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 
 /*ACTIONS*/
 
+/* PALABRAS RESERVADAS: deben ir antes que IDENTIFIER */
+"si"|"SI"             {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"entonces"|"ENTONCES" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"entero"|"ENTERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"numero"|"NUMERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"cadena"|"CADENA"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"escribir"|"ESCRIBIR" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"definir"|"DEFINIR"   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"como"|"COMO"         {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+
+/* IDENTIFICADORES: va después de las palabras reservadas */
+{Identifier}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);}
+
+/* STRINGS */
+{StringLiteral} {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);}
+
+/* PUNCTUATION */
+{Period}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
+{Comma}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
+{Semicolon}   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
+{Colon}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
+
+/* ARITHMETIC OPERATORS */
+{Plus}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Minus}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Multiply}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Divide}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Modulo}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Equal}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+
+/* GROUPING SYMBOLS */
+{LParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{RParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{LBracket}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{RBracket}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{LBrace}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{RBrace}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+
+
+
 "write"             {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);}
 "integer"           {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);}
-{Identifier}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);}
 {Number}            {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);}
 {Decimal}           {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DECIMAL);}
 {NUM_MAL}           {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
-{LineTerminator}    {/*IGNORE*/}
+{LineTerminator}    {System.out.println("SALTO DE LÍNEA");}
 {WhiteSpace}        {/*IGNORE*/}
 [^]                 {System.out.println("INVALID CHARACTER");}
+

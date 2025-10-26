@@ -1,7 +1,6 @@
 package ymcris.parser.controller.analyzer;
 
 import java.io.IOException;
-import ymcris.parser.model.word.Word;
 import ymcris.parser.view.analyzer.JFAnalyzer;
 import ymcris.parser.backend.analyzer.Analyzer;
 import ymcris.parser.backend.analyzer.ComponentsUpdater;
@@ -38,25 +37,23 @@ public class AnalyzerController {
      */
     public void analyze() {
         int rows = 0;
-        for (String line : componentsUpdater.getLines()) {//1. Travel all lines
-
+        //1. Travel all lines
+        for (String line : componentsUpdater.getLines()) {
             try {
-
-                analyzer.analyze(line, rows++);//2. Analyze line by line (and add his row)
-
-                analyzer.getWords().add(new Word("\n", 0, 0, false));//3. Separate lines
-
+                //2. Analyze line by line (and add his row)
+                analyzer.analyze(line, rows++);
+                
             } catch (IOException e) {
-
-                jFAnalyzer.showMessage("ANALYZER ERROR", e.getMessage());//4. Show error
-
+                //3. Show error
+                jFAnalyzer.showMessage("ANALYZER ERROR", e.getMessage());
             }
-
         }
 
-        analyzer.printWords();//4. Show analyzed words
+        //4. Show analyzed words
+        analyzer.printWords();
 
-        componentsUpdater.updateTextPane(jFAnalyzer.getJtpText(), analyzer.getWords());//5. Update Components
+        //5. Update components
+        componentsUpdater.updateTextPane(jFAnalyzer.getJtpText(), analyzer.getOutputLines());
 
     }
 

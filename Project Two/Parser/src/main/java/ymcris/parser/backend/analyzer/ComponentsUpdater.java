@@ -47,7 +47,7 @@ public class ComponentsUpdater {
         this.lines.addAll(Arrays.asList(textLines));
     }
 
-    public void updateTextPane(JTextPane jtpText, ArrayList<Word> words) {
+    public void updateTextPane(JTextPane jtpText, ArrayList<ArrayList<Word>> outputLines) {
 
         StyledDocument styledDocument = jtpText.getStyledDocument();
 
@@ -55,10 +55,10 @@ public class ComponentsUpdater {
 
             styledDocument.remove(0, styledDocument.getLength());
 
-            for (Word word : words) {
-
-                insertToken(jtpText, word);
-
+            for (ArrayList<Word> words : outputLines) {
+                for (Word word : words) {
+                    insertToken(jtpText, word);
+                }
             }
 
             styledDocument.insertString(styledDocument.getLength(), "\n", null);

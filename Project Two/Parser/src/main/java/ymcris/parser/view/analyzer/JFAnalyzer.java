@@ -65,7 +65,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
         });
     }
 
-    public void searchWord(JTextPane jtpText, String wordToSearch) {
+    private void searchWord(JTextPane jtpText, String wordToSearch) {
         try {
             Highlighter highlighter = jtpText.getHighlighter();
             highlighter.removeAllHighlights();
@@ -114,6 +114,7 @@ public class JFAnalyzer extends javax.swing.JFrame {
 
         jtpText.setBackground(new java.awt.Color(58, 58, 60));
         jtpText.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60), new java.awt.Color(58, 58, 60)));
+        jtpText.setFont(new java.awt.Font("Bitstream Charter", 0, 18)); // NOI18N
         jtpText.setForeground(new java.awt.Color(255, 255, 255));
         jtpText.setCaretColor(new java.awt.Color(229, 229, 231));
         jtpText.setDisabledTextColor(new java.awt.Color(229, 229, 231));
