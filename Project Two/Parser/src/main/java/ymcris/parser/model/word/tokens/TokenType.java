@@ -20,7 +20,8 @@ public enum TokenType {
     PUNCTUATION_MARKS("Signo de Puntuacion", "BLANCO", 8),
     GROUPING_MARKS("Signo de Agrupacion", "MORADO", 9),
     ERROR("Error", "ROJO", 10),
-    SPACE("SPACE", "ROJO", 11);
+    SPACE("SPACE", "ROJO", 11),
+    TAB("Tab", "ROJO", 12);
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int number;

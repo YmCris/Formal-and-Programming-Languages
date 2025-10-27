@@ -19,11 +19,11 @@ public class ErrorWord extends Word {
     private char errorCharacter;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public ErrorWord(String lexeme, int row, int column, boolean isToken,
-            char errorCharacter, ErrorType errorType) {
+    public ErrorWord(String lexeme, int row, int column, char errorCharacter,
+            ErrorType errorType) {
 
-        super(lexeme, row, column, isToken);
-
+        super(lexeme, row, column, false);
+        this.setColor("ROJO");
         this.errorCharacter = errorCharacter;
         this.errorType = errorType;
         this.description = errorType.getDescription();

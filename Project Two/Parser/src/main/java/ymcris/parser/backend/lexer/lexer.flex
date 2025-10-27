@@ -28,19 +28,16 @@ import ymcris.parser.model.word.tokens.TokenType;
     // REFERENCE VARIABLES -----------------------------------------------------
 
     private Language language = new Language();
-    ArrayList<Word> words = new ArrayList<>();// Save Tokens and Errors
+    ArrayList<Word> words = new ArrayList<>();
 
     // SPECIFIC METHODS --------------------------------------------------------
 
     public void saveError(Word word, ErrorType errorType, Character errorChar){
-        if(!word.isToken()){
 
-            ErrorWord error = new ErrorWord(word.getLexeme(), word.getRow(), word.getColumn(),
-            false, errorChar , errorType);
-
-            words.add(error);
-
-        }
+        ErrorWord error = new ErrorWord(word.getLexeme(), word.getRow(), word.getColumn(),
+        errorChar , errorType);
+        
+        words.add(error);
     }
 
     private void saveToken(Word word, TokenType tokenType){
@@ -74,8 +71,10 @@ DEFINIR = [Dd][Ee][Ff][Ii][Nn][Ii][Rr]
 COMO    = [Cc][Oo][Mm][Oo]
 
 /* STRINGS */
-StringLiteral = \"([^\"\n\r])*\"  // Comienza y termina con comillas, sin saltos de línea
+StringLiteral = \"([^\"\n\r])*\"
 
+/* Tabulation */
+Tab = \t
 
 /* PUNCTUATION */
 Period       = \.
@@ -99,12 +98,12 @@ RBracket    = \]
 LBrace      = \{
 RBrace      = \}
 
-
-Identifier = [:jletter:] [:jletterdigit:]*
-Digit = [0-9]
-Number = 0 | [1-9]{Digit}*
-NUM_MAL = {Digit}+\.?[^0-9]?
-Decimal = ({Number}\.{Digit}+ | \.{Digit}+)
+Digit        = [0-9]
+Letter       = [a-zA-Z]
+Identifier = [a-zA-Z] [a-zA-Z0-9_]*//Identifier = [:jletter:] [:jletterdigit:]*     
+Number       = {Digit}+
+Decimal      = {Digit}+ "." {Digit}+
+NUM_MAL      = {Digit}+{Letter}+
 LineTerminator = \r|\n|\r\n
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
@@ -112,7 +111,8 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 
 /*ACTIONS*/
 
-/* PALABRAS RESERVADAS: deben ir antes que IDENTIFIER */
+/* RESERVED WORDS */
+
 "si"|"SI"             {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
 "entonces"|"ENTONCES" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
 "entero"|"ENTERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
@@ -122,19 +122,23 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 "definir"|"DEFINIR"   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
 "como"|"COMO"         {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
 
-/* IDENTIFICADORES: va después de las palabras reservadas */
+/* IDENTIFIERS */
+
 {Identifier}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.IDENTIFIER);}
 
 /* STRINGS */
+
 {StringLiteral} {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);}
 
 /* PUNCTUATION */
+
 {Period}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 {Comma}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 {Semicolon}   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 {Colon}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 
 /* ARITHMETIC OPERATORS */
+
 {Plus}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
 {Minus}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
 {Multiply}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
@@ -143,6 +147,7 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 {Equal}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
 
 /* GROUPING SYMBOLS */
+
 {LParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
 {RParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
 {LBracket}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
@@ -151,13 +156,17 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 {RBrace}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
 
 
+/* OTHERS */
 
+{Tab}               {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.TAB);}
 "write"             {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.STRING);}
 "integer"           {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);}
 {Number}            {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.NUMBER);}
 {Decimal}           {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DECIMAL);}
-{NUM_MAL}           {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
 {LineTerminator}    {System.out.println("SALTO DE LÍNEA");}
 {WhiteSpace}        {/*IGNORE*/}
-[^]                 {System.out.println("INVALID CHARACTER");}
+
+/* ERRORS */
+{NUM_MAL}           {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
+[^]                 {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.INVALID_CHARACTER_ERROR, yycharat(yycolumn));}
 
