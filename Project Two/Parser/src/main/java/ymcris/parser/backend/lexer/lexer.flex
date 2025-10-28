@@ -19,6 +19,7 @@ import ymcris.parser.model.word.tokens.TokenType;
 %unicode
 %line
 %column
+%xstate BLOCK_COMMENT
 %type Word
 
 /*JAVA CODE*/
@@ -106,10 +107,27 @@ Decimal      = {Digit}+ "." {Digit}+
 NUM_MAL      = {Digit}+{Letter}+
 LineTerminator = \r|\n|\r\n
 WhiteSpace     = {LineTerminator} | [ \t\f]
+LineComment = "//" [^\n\r]*
 
 %%
 
 /*ACTIONS*/
+
+/* LINE COMMENTS */
+
+{LineComment}         {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.LINE_COMMENT);}
+
+/* BLOCK COMMENT: */
+
+/* BLOCK COMMENT: simple, sin estados */
+"/*"([^]*?)"*/" {
+    saveToken(
+        new Word(yytext(), yyline, yycolumn, true),
+        TokenType.BLOCK_COMMENT
+    );
+}
+
+
 
 /* RESERVED WORDS */
 
