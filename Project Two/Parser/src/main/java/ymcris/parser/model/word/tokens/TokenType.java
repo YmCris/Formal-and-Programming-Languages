@@ -21,7 +21,13 @@ public enum TokenType {
     GROUPING_MARKS("Signo de Agrupacion", "MORADO", 9),
     ERROR("Error", "ROJO", 10),
     SPACE("SPACE", "ROJO", 11),
-    TAB("Tab", "ROJO", 12);
+    TAB("Tab", "ROJO", 12),
+    IGUAL("Igual","AMARILLO",1),
+    PCOMA("Punto y Coma","BLANCO",1),
+    MAS("Mas","AMARILLO",1),
+    MENOS("Menos","AMARILLO",1),
+    POR("Por","AMARILLO",1),
+    DIV("Divición","AMARILLO",1);
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int number;

@@ -3,8 +3,10 @@ package ymcris.parser.backend.analyzer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.StringReader;
+import java.util.List;
 import ymcris.parser.model.word.Word;
 import ymcris.parser.backend.lexer.Lexer;
+import ymcris.parser.backend.parser.Parser;
 
 /**
  * The Analyzer class is the class responsible for do the respectives analyzer
@@ -43,9 +45,14 @@ public class Analyzer {
 
         //2. Do the lexer analysis
         lexer.yylex();
+        
+        List<Word> words = lexer.getWords();
+        Parser parser = new Parser(words);
+        parser.parse();
+        
 
         //3. Add the lexer words to the line list
-        for (Word word : lexer.getWords()) {
+        for (Word word : words) {
 
             //4. Set the row word
             word.setRow(row);
