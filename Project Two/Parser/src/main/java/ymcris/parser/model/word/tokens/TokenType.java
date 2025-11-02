@@ -9,38 +9,63 @@ package ymcris.parser.model.word.tokens;
 public enum TokenType {
 
     // ENUMS -------------------------------------------------------------------
-    RESERVED_WORD("Palabra Reservada", "AZUL", 0),
-    IDENTIFIER("Identificador", "CAFE", 1),
-    STRING("Cadena", "NARANJA", 2),
-    NUMBER("Numero", "VERDE", 3),
-    DECIMAL("Decimal", "NEGRO", 4),
-    LINE_COMMENT("Comentario de Linea", "VERDE_OSCURO", 5),
-    BLOCK_COMMENT("Comentario de Bloque", "VERDE_OSCURO", 6),
-    ARITHMETIC_OPERATOR("Operador Aritmetico", "AMARILLO", 7),
-    PUNCTUATION_MARKS("Signo de Puntuacion", "BLANCO", 8),
-    GROUPING_MARKS("Signo de Agrupacion", "MORADO", 9),
-    ERROR("Error", "ROJO", 10),
-    SPACE("SPACE", "ROJO", 11),
-    TAB("Tab", "ROJO", 12),
-    IGUAL("Igual","AMARILLO",1),
-    PCOMA("Punto y Coma","BLANCO",1),
-    MAS("Mas","AMARILLO",1),
-    MENOS("Menos","AMARILLO",1),
-    POR("Por","AMARILLO",1),
-    DIV("Divición","AMARILLO",1);
-
-    // PRIMITIVE VARIABLES -----------------------------------------------------
-    private int number;
+    /*
+      NARANJA = CADENAS
+      AZUL = RESERVADAS
+      CAFÉ= ID
+      VERDE= NÚMEROS
+      NEGRO= DECIMALES
+      VERDE OSCURO= COM
+      AMARRILLO= OPERADOR
+      MORADO= AGRUPACIÓN
+      ROJO= ERROR
+     */
+    //STRINGS
+    STRING("Cadena", "NARANJA"),
+    //RESERVED WORDS
+    RESERVED_WORD("palabra reservada", "AZUL"),
+    WRITE("ESCRIBIR", "AZUL"),
+    DEFINE("DEFINIR", "AZUL"),
+    HOW("COMO", "AZUL"),
+    RESERVED_WORD_INTEGER("entero","AZUL"),
+    RESERVED_WORD_DECIMAL("decimal","AZUL"),
+    RESERVED_WORD_STRING("cadena","AZUL"),
+    //ID
+    IDENTIFIER("Identificador", "CAFE"),
+    //NUMBERS
+    NUMBER("Numero", "VERDE"),
+    //DECIMALS
+    DECIMAL("Decimal", "NEGRO"),
+    //COMMENTS
+    LINE_COMMENT("Comentario de Linea", "VERDE_OSCURO"),
+    BLOCK_COMMENT("Comentario de Bloque", "VERDE_OSCURO"),
+    //PUNCTUATION
+    PUNCTUATION_MARKS("Signo de puntuación","BLANCO"),
+    //OPERATOR
+    ARITHMETIC_OPERATOR("Operador aritmético","AMARILLO"),
+    EQUALS("Igual", "AMARILLO"),
+    SEMICOLON("Punto y Coma", "BLANCO"),
+    PLUS("Mas", "AMARILLO"),
+    MINUS("Menos", "AMARILLO"),
+    MULTIPLY("Por", "AMARILLO"),
+    MODUL("Por", "AMARILLO"),
+    DIVIDE("Divición", "AMARILLO"),
+    //AGRUPATION
+    GROUPING_MARKS("Signon de agrupación", "MORADO"),
+    OPENING_PARENTHESES("(", "MORADO"),
+    CLOSING_PARENTHESES(")", "MORADO"),
+    //ERROR
+    TAB("TAB","ROJO"),
+    ERROR("Error", "ROJO");
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private String name;
     private String color;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    private TokenType(String name, String color, int number) {
+    private TokenType(String name, String color) {
         this.name = name;
         this.color = color;
-        this.number = number;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -50,10 +75,6 @@ public enum TokenType {
 
     public String getColor() {
         return color;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
 }

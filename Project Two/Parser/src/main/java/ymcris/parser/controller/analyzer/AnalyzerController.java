@@ -53,6 +53,7 @@ public class AnalyzerController {
         analyzer.printWords();
 
         //5. Update components
+        
         componentsUpdater.updateTextPane(jFAnalyzer.getJtpText(), analyzer.getOutputLines());
 
     }

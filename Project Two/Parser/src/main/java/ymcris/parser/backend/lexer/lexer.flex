@@ -133,12 +133,12 @@ LineComment = "//" [^\n\r]*
 
 "si"|"SI"             {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
 "entonces"|"ENTONCES" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"entero"|"ENTERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"numero"|"NUMERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"cadena"|"CADENA"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"escribir"|"ESCRIBIR" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"definir"|"DEFINIR"   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
-"como"|"COMO"         {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD);}
+"entero"|"ENTERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD_INTEGER);}
+"numero"|"NUMERO"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD_DECIMAL);}
+"cadena"|"CADENA"     {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.RESERVED_WORD_STRING);}
+"escribir"|"ESCRIBIR" {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.WRITE);}
+"definir"|"DEFINIR"   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DEFINE);}
+"como"|"COMO"         {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.HOW);}
 
 /* IDENTIFIERS */
 
@@ -152,22 +152,22 @@ LineComment = "//" [^\n\r]*
 
 {Period}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 {Comma}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
-{Semicolon}   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
+{Semicolon}   {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.SEMICOLON);}
 {Colon}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PUNCTUATION_MARKS);}
 
 /* ARITHMETIC OPERATORS */
 
-{Plus}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
-{Minus}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
-{Multiply}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
-{Divide}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Plus}        {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.PLUS);}
+{Minus}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.MINUS);}
+{Multiply}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.MULTIPLY);}
+{Divide}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.DIVIDE);}
 {Modulo}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
-{Equal}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.ARITHMETIC_OPERATOR);}
+{Equal}       {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.EQUALS);}
 
 /* GROUPING SYMBOLS */
 
-{LParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
-{RParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
+{LParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.OPENING_PARENTHESES);}
+{RParen}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.CLOSING_PARENTHESES);}
 {LBracket}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
 {RBracket}    {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}
 {LBrace}      {saveToken(new Word(yytext(), yyline, yycolumn, true), TokenType.GROUPING_MARKS);}

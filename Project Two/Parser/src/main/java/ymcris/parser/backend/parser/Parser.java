@@ -24,15 +24,16 @@ public class Parser {
     private String[][] table;
     private List<Word> words;
 
-    private String[] nonTerminals = {"A", "A'", "B", "B'", "C", "D", "E'", "F",
+    private String[] nonTerminals = {"S", "A", "A'", "B", "B'", "C", "D", "E", "F",
         "G", "H", "I", "J", "K", "L", "M", "N"};
 
     private String[] terminals = {
         "$",//Start Sign
         "identificador",//Identifier
-        "entero", "decimal", "cadena",//Reserved Words
+        "entero", "decimal", "cadena", "DEFINIR", "ESCRIBIR", "COMO",//Reserved Words
         "+", "-", "*", "/", "%", "=",//Arithmetic Operators
         ";",//Punctuation Marks
+        "(", ")"//Grouping Marks
     };
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
@@ -47,10 +48,19 @@ public class Parser {
 
     // SPECIFIC METHODS --------------------------------------------------------
     private void initializeTable() {
-        // Initialize all cells like errors (Start of analyze)
+        //...................... Initialize all cells ..........................
         for (int i = 0; i < nonTerminals.length; i++) {
             Arrays.fill(table[i], "ERROR");
         }
+
+        // S -> (lista de sentencias) S | ε
+        set("S", "DEFINIR", "G S");
+        set("S", "identificador", "D S");
+        set("S", "entero", "A S");
+        set("S", "decimal", "A S");
+        set("S", "cadena", "A S");
+        set("S", "ESCRIBIR", "K S");
+        set("S", "$", "ε");
 
         //..................... DEFINITION OF VARIABLES ........................
         // G → H
@@ -60,9 +70,13 @@ public class Parser {
         // H → IH | ε
         set("H", "DEFINIR", "I H");
         set("H", "$", "ε");
+        //NUEVO
+        set("H", ";", "ε");
+        set("H", "identificador", "ε");
+        set("H", "ESCRIBIR", "ε");
 
-        // I → DEFINIR identificador COMO J
-        set("I", "DEFINIR", "DEFINIR identificador COMO J");
+        // I → DEFINIR identificador COMO J ;
+        set("I", "DEFINIR", "DEFINIR identificador COMO J ;");
 
         // J → ( cadena | entero | decimal );
         set("J", "cadena", "cadena");
@@ -74,16 +88,20 @@ public class Parser {
         set("A", "identificador", "B A'");
         set("A", "entero", "B A'");
         set("A", "decimal", "B A'");
+        set("A", "cadena", "C A'");
 
         // A' → +BA' | -BA' | ε
         set("A'", "+", "+ B A'");
         set("A'", "-", "- B A'");
         set("A'", ";", "ε");
+        set("A'", "$", "ε");
+        set("A'", ")", "ε");
 
         //  B → CB'
         set("B", "identificador", "C B'");
         set("B", "entero", "C B'");
         set("B", "decimal", "C B'");
+        set("B'", ")", "ε");
 
         // B' → *CB' | /CB' | ε
         set("B'", "*", "* C B'");
@@ -91,11 +109,13 @@ public class Parser {
         set("B'", "+", "ε");
         set("B'", "-", "ε");
         set("B'", ";", "ε");
+        set("B'", "$", "ε");
 
         //  C → identificador | entero | decimal
         set("C", "identificador", "identificador");
         set("C", "entero", "entero");
         set("C", "decimal", "decimal");
+        set("C", "cadena", "cadena");
 
         //.................. ASSIGNING VALUES TO VARIABLES .....................
         // D → E
@@ -107,7 +127,7 @@ public class Parser {
         set("E", "$", "ε");
 
         // F → identicador = A;
-        set("F", "identificador", "identificador = A");
+        set("F", "identificador", "identificador = A ;");
 
         //......................... WRITE FUNCTION .............................
         // K → L
@@ -119,13 +139,14 @@ public class Parser {
         set("L", "$", "ε");
 
         // M → ESCRIBIR ( N );
-        set("M", "ESCRIBIR", "ESCRIBIR ( N );");
+        set("M", "ESCRIBIR", "ESCRIBIR ( N ) ;");
 
         // N → cadena | entero | decimal | identificador
-        set("N", "cadena", "cadena");
-        set("N", "entero", "entero");
-        set("N", "decimal", "decimal");
-        set("N", "identificador", "identificador");
+        set("N", "cadena", "A");
+        set("N", "entero", "A");
+        set("N", "decimal", "A");
+        set("N", "identificador", "A");
+        set("N", ")", "ε");
 
     }
 
@@ -151,6 +172,7 @@ public class Parser {
         if (index < words.size()) {
             Word word = words.get(index);
             if (word instanceof Token token) {
+                System.out.println("token: " + token.getLexeme() + " type: " + token.getTokenType());
                 return mapToken(token.getTokenType());
             }
         }
@@ -160,35 +182,60 @@ public class Parser {
     private String mapToken(TokenType type) {
         return switch (type) {
             case IDENTIFIER ->
-                "ID";
-            case IGUAL ->
+                "identificador";
+            case EQUALS ->
                 "=";
             case NUMBER ->
-                "NUMERO";
+                "entero";
             case DECIMAL ->
-                "DECIMAL";
-            case PCOMA ->
-                ";";
-            case MAS ->
+                "decimal";
+            case STRING ->
+                "cadena";
+            case PLUS ->
                 "+";
-            case MENOS ->
+            case MINUS ->
                 "-";
-            case POR ->
+            case MULTIPLY ->
                 "*";
-            case DIV ->
+            case DIVIDE ->
                 "/";
-            case ERROR ->
+            case SEMICOLON ->
+                ";";
+            case DEFINE ->
+                "DEFINIR";
+            case HOW ->
+                "COMO";
+            case WRITE ->
+                "ESCRIBIR";
+            case OPENING_PARENTHESES ->
+                "(";
+            case CLOSING_PARENTHESES ->
+                ")";
+            case RESERVED_WORD_STRING ->
+                "cadena";
+            case RESERVED_WORD_INTEGER ->
+                "entero";
+            case RESERVED_WORD_DECIMAL ->
+                "decimal";
+            case LINE_COMMENT ->
                 "$";
-            default ->
-                "ERROR";
+            case BLOCK_COMMENT ->
+                "$";
+            case ERROR ->
+                "ERROR";//$
+            default -> {
+                System.out.println("mapToken: token no mapeado -> " + type);
+                yield "ERROR";
+            }
         };
     }
 
     public boolean parse() {
-        Stack<String> stack = new Stack<>();
+        Stack<String> stack = new Stack<>();// LIFO
+        // push = insertar | peek = obtener el ultimo sin eliminarlo | pop = peek pero elimina
         stack.push("$");
-        stack.push("P");
-
+        stack.push("S");
+        System.out.println("\n".repeat(2));
         System.out.printf("%-45s %-20s %-30s%n", "PILA", "ENTRADA", "ACCIÓN");
         System.out.println("--------------------------------------------------------------------------------------");
 
@@ -198,7 +245,6 @@ public class Parser {
             String currentToken = lookAhead();
 
             System.out.printf("%-45s %-20s ", stack.toString(), currentToken);
-
             if (isTerminal(top)) {
                 if (top.equals(currentToken)) {
                     stack.pop();
@@ -233,7 +279,6 @@ public class Parser {
 
                 System.out.println(top + " -> " + produccion);
             }
-
         }
 
         System.out.println("\n Análisis sintáctico exitoso");
@@ -241,7 +286,14 @@ public class Parser {
     }
 
     private boolean isTerminal(String symbol) {
-        return Arrays.asList("ID", "=", "NUMERO", "DECIMAL", "+", "-", "*", "/", ";", "$").contains(symbol);
+        return Arrays.asList(
+                "$",//Start Sign
+                "identificador",//Identifier
+                "entero", "decimal", "cadena", "DEFINIR", "ESCRIBIR", "COMO",//Reserved Words
+                "+", "-", "*", "/", "%", "=",//Arithmetic Operators
+                ";",//Punctuation Marks
+                "(", ")"//Grouping Marks
+        ).contains(symbol);
     }
 
 }

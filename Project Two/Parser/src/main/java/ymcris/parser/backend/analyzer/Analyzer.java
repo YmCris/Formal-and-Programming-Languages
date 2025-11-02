@@ -45,11 +45,8 @@ public class Analyzer {
 
         //2. Do the lexer analysis
         lexer.yylex();
-        
+
         List<Word> words = lexer.getWords();
-        Parser parser = new Parser(words);
-        parser.parse();
-        
 
         //3. Add the lexer words to the line list
         for (Word word : words) {
@@ -64,12 +61,14 @@ public class Analyzer {
 
         //6. Add the break line
         lineWords.add(new Word("\n", 0, 0, false));
+        Parser parser = new Parser(words);
+        parser.parse();
 
         //7. Save the line words to the output lines list
         outputLines.add(lineWords);
 
     }
-
+    
     public void deleteLine(int row) {
         outputLines.remove(row);
     }
