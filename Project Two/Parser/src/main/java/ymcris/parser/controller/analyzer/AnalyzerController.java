@@ -1,6 +1,7 @@
 package ymcris.parser.controller.analyzer;
 
 import java.io.IOException;
+import ymcris.parser.backend.analyzer.Write;
 import ymcris.parser.view.analyzer.JFAnalyzer;
 import ymcris.parser.backend.analyzer.Analyzer;
 import ymcris.parser.backend.analyzer.ComponentsUpdater;
@@ -11,6 +12,7 @@ import ymcris.parser.backend.analyzer.ComponentsUpdater;
  * information with distins models
  *
  * @author YmCris
+ * @see Write
  * @see Analyzer
  * @see JFAnalyzer
  * @see ComponentsUpdater
@@ -19,6 +21,7 @@ import ymcris.parser.backend.analyzer.ComponentsUpdater;
 public class AnalyzerController {
 
     // REFERENCE VARIABLES -----------------------------------------------------
+    private Write write;
     private Analyzer analyzer;
     private JFAnalyzer jFAnalyzer;
     private ComponentsUpdater componentsUpdater;
@@ -28,6 +31,7 @@ public class AnalyzerController {
         this.jFAnalyzer = jFLexicalAnalyzer;
         this.analyzer = new Analyzer();
         this.componentsUpdater = new ComponentsUpdater(jFAnalyzer);
+        this.write = new Write(jFAnalyzer);
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -42,7 +46,7 @@ public class AnalyzerController {
             try {
                 //2. Analyze line by line (and add his row)
                 analyzer.analyze(line, rows++);
-                
+
             } catch (IOException e) {
                 //3. Show error
                 jFAnalyzer.showMessage("ANALYZER ERROR", e.getMessage());
@@ -51,11 +55,11 @@ public class AnalyzerController {
 
         //4. Show analyzed words
         analyzer.printWords();
+        analyzer.printVariables();
 
         //5. Update components
-        
         componentsUpdater.updateTextPane(jFAnalyzer.getJtpText(), analyzer.getOutputLines());
-
+        write.print(analyzer.getValues());
     }
 
     /**
