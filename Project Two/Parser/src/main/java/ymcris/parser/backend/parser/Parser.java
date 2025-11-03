@@ -1,11 +1,15 @@
 package ymcris.parser.backend.parser;
 // See all parser documentation here -> https://docs.google.com/document/d/1Unn_hdKVNWP-eRf-zg7QK7U1yz4jdrrPSI7KXPFra2Q/edit?tab=t.0#heading=h.p6zle2rgd88w
 
-import java.util.List;
 import java.util.Stack;
 import java.util.Arrays;
+import java.util.ArrayList;
+import ymcris.parser.model.expresion.AssignmentExpresion;
 import ymcris.parser.model.word.Word;
 import ymcris.parser.model.word.tokens.Token;
+import ymcris.parser.model.variables.Variable;
+import ymcris.parser.model.expresion.Expresion;
+import ymcris.parser.model.variables.VariableType;
 import ymcris.parser.model.word.tokens.TokenType;
 
 /**
@@ -22,7 +26,13 @@ public class Parser {
 
     // REFERENCE VARIABLES -----------------------------------------------------
     private String[][] table;
-    private List<Word> words;
+    private ArrayList<Word> words;
+
+    private String variableName;
+    private Variable variable;
+    private Expresion expresion;
+    private AssignmentExpresion variableValue;
+    private ArrayList<Token> tokenExpresions;
 
     private String[] nonTerminals = {"S", "A", "A'", "B", "B'", "C", "D", "E", "F",
         "G", "H", "I", "J", "K", "L", "M", "N"};
@@ -38,9 +48,10 @@ public class Parser {
 
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int index = 0;
+    private int tokenIndex = 0;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
-    public Parser(List<Word> words) {
+    public Parser(ArrayList<Word> words) {
         this.words = words;
         this.table = new String[nonTerminals.length][terminals.length];
         initializeTable();
@@ -158,6 +169,12 @@ public class Parser {
         }
     }
 
+    public void restartParser() {
+        this.variable = null;
+        this.expresion = null;
+        this.variableValue = null;
+    }
+
     // FUNCTIONS ---------------------------------------------------------------
     private int indexOf(String[] array, String value) {
         for (int i = 0; i < array.length; i++) {
@@ -168,11 +185,25 @@ public class Parser {
         return -1;
     }
 
+    private Token getToken() {
+        for (Word word : words) {
+            if (word instanceof Token token) {
+                if (token.getTokenType().equals(TokenType.IDENTIFIER)) {
+                    return token;
+                }
+            }
+        }
+        return null;
+    }
+
     private String lookAhead() {
         if (index < words.size()) {
             Word word = words.get(index);
             if (word instanceof Token token) {
                 System.out.println("token: " + token.getLexeme() + " type: " + token.getTokenType());
+                if (token.getTokenType().equals(TokenType.IDENTIFIER)) {
+                    variableName = token.getLexeme();
+                }
                 return mapToken(token.getTokenType());
             }
         }
@@ -230,7 +261,12 @@ public class Parser {
         };
     }
 
-    public boolean parse() {
+    public Object parse() {
+
+        ActionType type = null;
+
+        VariableType variableType = null;
+
         Stack<String> stack = new Stack<>();// LIFO
         // push = insertar | peek = obtener el ultimo sin eliminarlo | pop = peek pero elimina
         stack.push("$");
@@ -242,6 +278,7 @@ public class Parser {
         while (!stack.isEmpty()) {
 
             String top = stack.peek();
+            Token token = getToken();
             String currentToken = lookAhead();
 
             System.out.printf("%-45s %-20s ", stack.toString(), currentToken);
@@ -249,7 +286,13 @@ public class Parser {
                 if (top.equals(currentToken)) {
                     stack.pop();
                     index++;
+                    tokenIndex++;
                     System.out.println("match(" + currentToken + ")");
+
+                    if (token != null) {
+                        saveVariable(token.getLexeme(), currentToken);
+                    }
+
                 } else {
                     System.out.println("Error: se esperaba " + top + " pero llegó " + currentToken);
                     return false;
@@ -270,6 +313,13 @@ public class Parser {
 
                 stack.pop();
 
+                ActionType at = logAction(top, variableType, variableName);
+                if (at != ActionType.ERROR) {
+                    if (type == null) {
+                        type = at;
+                    }
+                }
+
                 if (!produccion.equals("ε")) {
                     String[] symbols = produccion.trim().split("\\s+");
                     for (int k = symbols.length - 1; k >= 0; k--) {
@@ -282,7 +332,104 @@ public class Parser {
         }
 
         System.out.println("\n Análisis sintáctico exitoso");
-        return true;
+        printValues(type);
+        return returnObject(type);
+    }
+
+    private void saveVariable(String name, String type) {
+        if (type.equals(VariableType.ENTERO.getName())) {
+            variable = new Variable(VariableType.ENTERO, name);
+            System.out.println("Variable: " + variable.getName() + variable.getType());
+        }
+        if (type.equals(VariableType.NUMERO.getName())) {
+            variable = new Variable(VariableType.NUMERO, name);
+            System.out.println("Variable: " + variable.getName() + variable.getType());
+        }
+        if (type.equals(VariableType.CADENA.getName())) {
+            variable = new Variable(VariableType.CADENA, name);
+            System.out.println("Variable: " + variable.getName() + variable.getType());
+        }
+    }
+
+    private void printValues(ActionType type) {
+        System.out.println("La action es " + type);
+        if (variable != null) {
+            System.out.println("Soy la variable " + variable.getName() + " del tipo " + variable.getType() + " con el valor " + variable.getValue());
+        }
+        if (expresion != null) {
+            System.out.println("Soy la expresión ");
+            expresion.print();
+        }
+        if (variableValue != null) {
+            System.out.println("Soy el valor de la variable " + variableValue.getExpresion() + " de la variable " + variableValue.getVariableName());
+        }
+    }
+
+    private ActionType logAction(String nonTerminal, VariableType variableType,
+            String variableName) {
+
+        switch (nonTerminal) {
+            case "I" -> {
+                variable = new Variable(variableType, variableName);
+                return ActionType.DEFINE_VARIABLE;
+            }
+            case "F" -> {//
+                saveExpresions();
+                variableValue = new AssignmentExpresion(variableName, tokenExpresions);
+                return ActionType.ASSIGNING_VALUE;
+            }
+            case "A" -> {
+                saveExpresions();
+                expresion = new Expresion(tokenExpresions);
+                expresion.setBlocked(true);
+                expresion.setIsNumber(true);
+                return ActionType.EXPRESION;
+            }
+            case "M" -> {//
+                expresion = new Expresion(tokenExpresions);
+                expresion.setBlocked(true);
+                expresion.setIsNumber(false);
+                return ActionType.WRITE;
+            }
+            default -> {
+                return ActionType.ERROR;
+            }
+        }
+
+    }
+
+    private void saveExpresions() {
+        tokenExpresions = new ArrayList<>();
+        for (Word word : words) {
+            if (word instanceof Token token) {
+                tokenExpresions.add(token);
+            }
+        }
+    }
+
+    private Object returnObject(ActionType type) {
+        if (type != null) {
+            switch (type) {
+                case DEFINE_VARIABLE -> {
+                    return variable;
+                }
+                case EXPRESION -> {
+                    return expresion;
+                }
+                case ASSIGNING_VALUE -> {
+                    return variableValue;
+                }
+                case WRITE -> {
+                    return expresion;
+                }
+                case ERROR -> {
+                    return null;
+                }
+                default ->
+                    throw new AssertionError();
+            }
+        }
+        return null;
     }
 
     private boolean isTerminal(String symbol) {
@@ -294,6 +441,10 @@ public class Parser {
                 ";",//Punctuation Marks
                 "(", ")"//Grouping Marks
         ).contains(symbol);
+    }
+
+    public AssignmentExpresion getVariableValue() {
+        return variableValue;
     }
 
 }

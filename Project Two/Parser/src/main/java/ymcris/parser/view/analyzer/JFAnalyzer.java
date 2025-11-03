@@ -104,6 +104,10 @@ public class JFAnalyzer extends javax.swing.JFrame {
         btnReports = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         btnAnalyzer = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtpConsole = new javax.swing.JTextPane();
+        btnAnalyzer1 = new javax.swing.JButton();
+        btnAnalyzer2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -205,6 +209,49 @@ public class JFAnalyzer extends javax.swing.JFrame {
             }
         });
 
+        jtpConsole.setEditable(false);
+        jtpConsole.setBackground(new java.awt.Color(100, 100, 105));
+        jtpConsole.setBorder(null);
+        jtpConsole.setForeground(new java.awt.Color(229, 229, 231));
+        jtpConsole.setCaretColor(new java.awt.Color(229, 229, 231));
+        jtpConsole.setDisabledTextColor(new java.awt.Color(229, 229, 231));
+        jtpConsole.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        jtpConsole.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jtpConsole.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtpConsoleKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtpConsoleKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtpConsoleKeyTyped(evt);
+            }
+        });
+        jScrollPane5.setViewportView(jtpConsole);
+
+        btnAnalyzer1.setBackground(new java.awt.Color(58, 58, 60));
+        btnAnalyzer1.setFont(new java.awt.Font("Swis721 BlkCn BT", 0, 18)); // NOI18N
+        btnAnalyzer1.setForeground(new java.awt.Color(229, 229, 231));
+        btnAnalyzer1.setText("Limpiar");
+        btnAnalyzer1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAnalyzer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalyzer1ActionPerformed(evt);
+            }
+        });
+
+        btnAnalyzer2.setBackground(new java.awt.Color(58, 58, 60));
+        btnAnalyzer2.setFont(new java.awt.Font("Swis721 BlkCn BT", 0, 18)); // NOI18N
+        btnAnalyzer2.setForeground(new java.awt.Color(229, 229, 231));
+        btnAnalyzer2.setText("Usar");
+        btnAnalyzer2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAnalyzer2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalyzer2ActionPerformed(evt);
+            }
+        });
+
         jdpBackground.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnChooseFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -215,6 +262,9 @@ public class JFAnalyzer extends javax.swing.JFrame {
         jdpBackground.setLayer(btnReports, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnExit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpBackground.setLayer(btnAnalyzer, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpBackground.setLayer(jScrollPane5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpBackground.setLayer(btnAnalyzer1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpBackground.setLayer(btnAnalyzer2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdpBackgroundLayout = new javax.swing.GroupLayout(jdpBackground);
         jdpBackground.setLayout(jdpBackgroundLayout);
@@ -222,55 +272,62 @@ public class JFAnalyzer extends javax.swing.JFrame {
             jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                        .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(btnSearchWord, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSearchWord, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSaveText, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(btnAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(218, 218, 218)
-                                .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdpBackgroundLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(btnChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSaveText, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSearchWord, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSearchWord)
+                .addGap(18, 18, 18)
+                .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jdpBackgroundLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAnalyzer1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAnalyzer2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jdpBackgroundLayout.setVerticalGroup(
             jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdpBackgroundLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSaveText, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReports, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchWord, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchWord, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSearchWord, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(btnSearchWord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jdpBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdpBackgroundLayout.createSequentialGroup()
+                        .addComponent(btnAnalyzer1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAnalyzer2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdpBackgroundLayout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -281,7 +338,9 @@ public class JFAnalyzer extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpBackground)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(jdpBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -323,24 +382,52 @@ public class JFAnalyzer extends javax.swing.JFrame {
         analyzerController.analyze();
     }//GEN-LAST:event_btnAnalyzerActionPerformed
 
+    private void jtpConsoleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyPressed
+
+    }//GEN-LAST:event_jtpConsoleKeyPressed
+
+    private void jtpConsoleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyReleased
+
+    }//GEN-LAST:event_jtpConsoleKeyReleased
+
+    private void jtpConsoleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtpConsoleKeyTyped
+
+    }//GEN-LAST:event_jtpConsoleKeyTyped
+
+    private void btnAnalyzer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzer1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnalyzer1ActionPerformed
+
+    private void btnAnalyzer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzer2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnalyzer2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalyzer;
+    private javax.swing.JButton btnAnalyzer1;
+    private javax.swing.JButton btnAnalyzer2;
     private javax.swing.JButton btnChooseFile;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnReports;
     private javax.swing.JButton btnSaveText;
     private javax.swing.JButton btnSearchWord;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JDesktopPane jdpBackground;
+    private javax.swing.JTextPane jtpConsole;
     private javax.swing.JTextPane jtpText;
     private javax.swing.JTextField txtSearchWord;
     // End of variables declaration//GEN-END:variables
 
     public JTextPane getJtpText() {
         return jtpText;
+    }
+
+    public JTextPane getJtpConsole() {
+        return jtpConsole;
     }
 
     public AnalyzerController getAnalyzerController() {

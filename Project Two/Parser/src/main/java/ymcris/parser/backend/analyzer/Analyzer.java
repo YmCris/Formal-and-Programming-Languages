@@ -3,10 +3,13 @@ package ymcris.parser.backend.analyzer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.StringReader;
-import java.util.List;
 import ymcris.parser.model.word.Word;
 import ymcris.parser.backend.lexer.Lexer;
 import ymcris.parser.backend.parser.Parser;
+import ymcris.parser.model.expresion.AssignmentExpresion;
+import ymcris.parser.model.expresion.Expresion;
+import ymcris.parser.model.variables.Variable;
+import ymcris.parser.model.word.tokens.TokenType;
 
 /**
  * The Analyzer class is the class responsible for do the respectives analyzer
@@ -18,11 +21,15 @@ import ymcris.parser.backend.parser.Parser;
 public class Analyzer {
 
     // REFERENCE VARIABLES -----------------------------------------------------
+    private ArrayList<Variable> variables;
     private ArrayList<ArrayList<Word>> outputLines;
+    private ArrayList<String> values;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public Analyzer() {
         this.outputLines = new ArrayList<>();
+        this.variables = new ArrayList<>();
+        this.values = new ArrayList<>();
     }
 
     // SPECIFIC METHODS --------------------------------------------------------
@@ -46,7 +53,7 @@ public class Analyzer {
         //2. Do the lexer analysis
         lexer.yylex();
 
-        List<Word> words = lexer.getWords();
+        ArrayList<Word> words = lexer.getWords();
 
         //3. Add the lexer words to the line list
         for (Word word : words) {
@@ -61,14 +68,53 @@ public class Analyzer {
 
         //6. Add the break line
         lineWords.add(new Word("\n", 0, 0, false));
+
         Parser parser = new Parser(words);
-        parser.parse();
+        Object object = parser.parse();
+
+        doAction(object, parser.getVariableValue());
+
+        parser.restartParser();
 
         //7. Save the line words to the output lines list
         outputLines.add(lineWords);
 
     }
-    
+
+    private void doAction(Object object, AssignmentExpresion assigns) {
+        if (object instanceof Variable variable) {
+            System.out.println("VOY A GUARDAR UNA VARIABLE");
+            variables.add(variable);
+        }
+        if (object instanceof Expresion expresion) {
+            if (expresion.getExpresion().get(0).getTokenType().equals(TokenType.WRITE)) {
+                if (expresion.isIsNumber()) {
+                    System.out.println("VOY A ESCRIBIR UNA OPERACIÓN");
+                    expresion.setVariables(variables);
+                    double result = expresion.calculateMathematicExpresion();
+                    values.add(String.valueOf(result));
+                } else {
+                    System.out.println("VOY A ESCRIBIR UNA CADENA");
+                    expresion.setVariables(variables);
+                    String result = expresion.printString();
+                    values.add(String.valueOf(result));
+                }
+            } else {
+                System.out.println("VOY A HACER UNA OPERACIÓN");
+                expresion.setVariables(variables);
+                double result = expresion.calculateMathematicExpresion();
+                System.out.println(result);
+            }
+        }
+        if (object instanceof AssignmentExpresion assign) {
+            System.out.println("VOY A ASIGNAR UN VALOR");
+            System.out.println("EXPRESION " + assigns.getExpresion());
+            System.out.println("VARIABLE NAME " + assigns.getVariableName());
+            assign.setVariables(variables);
+            assign.assignValue();
+        }
+    }
+
     public void deleteLine(int row) {
         outputLines.remove(row);
     }
@@ -112,6 +158,8 @@ public class Analyzer {
      */
     public void restartAnalysis() {
         outputLines = new ArrayList<>(50);
+        variables = new ArrayList<>();
+        values = new ArrayList<>();
     }
 
     /**
@@ -129,6 +177,12 @@ public class Analyzer {
         }
     }
 
+    public void printVariables() {
+        for (Variable variable : variables) {
+            System.out.println("Variable: " + variable.getName() + " type: " + variable.getType()+" value "+variable.getValue());
+        }
+    }
+
     // GETTERS -----------------------------------------------------------------
     public ArrayList<ArrayList<Word>> getOutputLines() {
         return outputLines;
@@ -137,4 +191,9 @@ public class Analyzer {
     public ArrayList<Word> getRowAnalyzed(int row) {
         return outputLines.get(row);
     }
+
+    public ArrayList<String> getValues() {
+        return values;
+    }
+
 }
